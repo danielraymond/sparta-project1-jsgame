@@ -2,12 +2,11 @@ body {
 
 }
 
-#left {
-  /*background-color: red;*/
-  /*height: 700px;*/
+#top {
+  height: 100vh;
+  background-color: red;
 }
 
-#right {
-  /*background-color: blue;*/
-  /*height: 700px;*/
+#bottom {
+  height: 100vh;
 }
