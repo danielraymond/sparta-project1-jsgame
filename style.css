@@ -1,5 +1,5 @@
 body {
-
+  font-family: arial;
 }
 
 #top {
@@ -38,4 +38,30 @@ nav {
   height: 10%;
   margin-top: 30%;
   margin-left: 40%;
+}
+
+#choice-one {
+  visibility: hidden;
+  color: white;
+  text-align: center;
+  margin-top: -10%;
+  margin-bottom: 10%;
+}
+
+.choice-button-1 {
+  visibility: hidden;
+  width: 20%;
+  height: 10%;
+  display: inline-block;
+  float: none;
+  margin-left: 20%;
+}
+
+.choice-button-2 {
+  visibility: hidden;
+  width: 20%;
+  height: 10%;
+  display: inline-block;
+  float: none;
+  margin-left: 20%;
 }
