@@ -5,6 +5,7 @@ $(function(){
   var playerHealth = 12;
   var winTest = null;
 
+  // game options
   var data =  {
     "text":["You are at the entrance to the ... 100 metres into the corridor/tunnel you come across two doors. Do you choose the left door or the right door?",
     "You are in a circular room with a basin of water in the middle. The water looks clear and you feel the urge to drink. There is a door at the far side of the room. Do you ",
@@ -41,7 +42,7 @@ $(function(){
     locationCounter ++;
   }
 
-  // function for the decision you make
+  // functions for the decision you make
   function choice1() {
     $(".choice-button-1").css("display", "none");
     $(".choice-button-2").css("display", "none");
@@ -88,6 +89,7 @@ $(function(){
     combatReady();
   }
 
+  // function to prepare screen for combat
   function combatReady() {
     $(".combat-roll-button").css("display", "inline-block");
     $(".combat-text").css("display", "inline-block");
@@ -95,6 +97,7 @@ $(function(){
     enemyHealth = parseInt(data.enemyHealth[combatCounter]);
   }
 
+  // function to engage combat when button is clicked
   function combat() {
     var playerRoll = Math.floor(Math.random() * 6);
     var enemyRoll = Math.floor(Math.random() * 6);
@@ -110,6 +113,7 @@ $(function(){
       $(".combat-text").html("You both missed!");
     }
 
+    // check to see if player or enemy has died
     if (playerHealth <= 0) {
       $(".combat-text").html("You are dead!");
       gameLost();
@@ -119,17 +123,20 @@ $(function(){
     }
   }
 
+  // function to remove old buttons when next decision is made
   function removeDecisionButtons() {
     $(".decision-button-1").remove();
     $(".decision-button-2").remove();
   }
 
+  // function to remove combat screen once combat is completed
   function removeCombat() {
     $(".combat-text").html("You are in combat")
     $(".combat-roll-button").css("display", "none");
     $(".combat-text").css("display", "none");
   }
 
+  // function to go to next function if combat is won
   function victory() {
     if (winTest === "test") {
       orcWin();
@@ -138,6 +145,7 @@ $(function(){
     }
   }
 
+  // restart screen if player won
   function gameWon() {
     removeCombat();
     $(".col-md-10").append('<h1 class="winMessage">YOU HAVE WON!</h1>');
@@ -145,6 +153,7 @@ $(function(){
     $("#restart").click(restart);
   }
 
+  // restart screen if player lost
   function gameLost() {
     removeCombat();
     $(".col-md-10").append('<h1 class="winMessage">YOU ARE DEAD!</h1>');
@@ -152,6 +161,7 @@ $(function(){
     $("#restart").click(restart);
   }
 
+  // function to restart game when button clicked
   function restart() {
     playerHealth = 12;
     winTest = null;
@@ -161,25 +171,5 @@ $(function(){
   }
 
   setGameListeners();
-
-
-
-
-
-
-
-function path2() {
-  // Use jquery to create two new buttons and give them ids
-  // Add a new id to them and target that
-  // Add new event listeners to these new buttons
-  // Have the event listeners call new fucntions e.g. path3 or path4
-  // Rinse and repeat
-}
-
-
-
-
-
-
-
+  
 })
