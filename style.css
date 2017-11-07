@@ -38,10 +38,10 @@ nav {
   height: 10%;
   margin-top: 30%;
   margin-left: 40%;
-  visibility: hidden;
+  /*visibility: hidden;*/
 }
 
-#choice-one {
+#decision-text {
   visibility: hidden;
   color: white;
   text-align: center;
@@ -68,7 +68,7 @@ nav {
 }
 
 .combat-roll-button {
-  /*visibility: hidden;*/
+  visibility: hidden;
   width: 20%;
   height: 10%;
   display: inline-block;
@@ -79,7 +79,7 @@ nav {
 }
 
 .combat-text {
-  /*visibility: hidden;*/
+  visibility: hidden;
   color: white;
   width: 20%;
 }
