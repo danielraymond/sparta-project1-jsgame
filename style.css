@@ -38,40 +38,39 @@ nav {
   height: 10%;
   margin-top: 30%;
   margin-left: 40%;
-  /*visibility: hidden;*/
+  /*display: none;*/
 }
 
 #decision-text {
-  visibility: hidden;
+  display: none;
   color: white;
   text-align: center;
-  margin-top: -10%;
-  margin-bottom: 10%;
+  margin-top: 30%;
+  margin-bottom: 20px;
+  margin: auto;
 }
 
 .choice-button-1 {
-  visibility: hidden;
+  display: none;
   width: 20%;
   height: 10%;
-  display: inline-block;
   float: none;
   margin-left: 20%;
+  margin-top: 20%;
 }
 
 .choice-button-2 {
-  visibility: hidden;
+  display: none;
   width: 20%;
   height: 10%;
-  display: inline-block;
   float: none;
   margin-left: 20%;
 }
 
 .combat-roll-button {
-  visibility: hidden;
+  display: none;
   width: 20%;
   height: 10%;
-  display: inline-block;
   float: none;
   margin-left: 20%;
   background-color: red;
@@ -79,7 +78,16 @@ nav {
 }
 
 .combat-text {
-  visibility: hidden;
+  display: none;
   color: white;
   width: 20%;
+}
+
+.decision-button {
+  display: inline-block;
+  width: 20%;
+  height: 10%;
+  float: none;
+  margin-left: 20%;
+
 }
