@@ -29,6 +29,8 @@ $(function(){
 
   // function that happens when the start game button is clicked
   function startGame() {
+    $("#restart").remove();
+    $(".winMessage").remove();
     $("#decision-text").css("display", "inline-block");
     $(".choice-button-1").css("display", "inline-block");
     $(".choice-button-2").css("display", "inline-block");
@@ -52,7 +54,7 @@ $(function(){
   function orcWin() {
     removeCombat();
     $("#decision-text").css("display", "inline-block");
-    $(".col-md-10").append('<button class="decision-button" id="orcFightWin"></button>')
+    $(".col-md-10").append('<button class="decision-button-1" id="orcFightWin"></button>')
     $("#decision-text").html(data.text[3]);
     $("#orcFightWin").html(data.button2[3]);
     $("#orcFightWin").click(boss);
@@ -61,8 +63,8 @@ $(function(){
   function choice2() {
     $(".choice-button-1").css("display", "none");
     $(".choice-button-2").css("display", "none");
-    $(".col-md-10").append('<button class="decision-button" id="drink"></button>')
-    $(".col-md-10").append('<button class="decision-button" id="noDrink"></button>');
+    $(".col-md-10").append('<button class="decision-button-2" id="drink"></button>')
+    $(".col-md-10").append('<button class="decision-button-2" id="noDrink"></button>');
     $("#decision-text").html(data.text[1]);
     $("#drink").html(data.button1[1])
     $("#noDrink").html(data.button2[2])
@@ -74,7 +76,7 @@ $(function(){
     removeDecisionButtons();
     $("#decision-text").html(data.text[2]);
     playerHealth = playerHealth + 6;
-    $(".col-md-10").append('<button class="decision-button" id="leave"></button>')
+    $(".col-md-10").append('<button class="decision-button-1" id="leave"></button>')
     $("#leave").html(data.button2[3]);
     $("#leave").click(boss);
   }
@@ -110,6 +112,7 @@ $(function(){
 
     if (playerHealth <= 0) {
       $(".combat-text").html("You are dead!");
+      gameLost();
     } else if (enemyHealth <= 0) {
       $(".combat-text").html("The " + data.enemy[combatCounter] + " is dead");
       victory();
@@ -117,7 +120,8 @@ $(function(){
   }
 
   function removeDecisionButtons() {
-    $(".decision-button").remove();
+    $(".decision-button-1").remove();
+    $(".decision-button-2").remove();
   }
 
   function removeCombat() {
@@ -130,10 +134,30 @@ $(function(){
     if (winTest === "test") {
       orcWin();
     } else if (winTest === "boss") {
-      removeDecisionButtons();
-      removeCombat();
-      $(".col-md-10").append('<h1>YOU HAVE WON</h1>');
+      gameWon();
     }
+  }
+
+  function gameWon() {
+    removeCombat();
+    $(".col-md-10").append('<h1 class="winMessage">YOU HAVE WON!</h1>');
+    $(".col-md-10").append('<button class="decision-button-1" id="restart">Restart</button>');
+    $("#restart").click(restart);
+  }
+
+  function gameLost() {
+    removeCombat();
+    $(".col-md-10").append('<h1 class="winMessage">YOU HAVE LOST!</h1>');
+    $(".col-md-10").append('<button class="decision-button-1" id="restart">Restart</button>');
+    $("#restart").click(restart);
+  }
+
+  function restart() {
+    playerHealth = 12;
+    winTest = null;
+    locationCounter = 0;
+    combatCounter = 0;
+    startGame();
   }
 
   setGameListeners();

@@ -1,5 +1,5 @@
 body {
-  font-family: arial;
+  font-family: "Book Antiqua";
 }
 
 #top {
@@ -38,16 +38,19 @@ nav {
   height: 10%;
   margin-top: 30%;
   margin-left: 40%;
-  /*display: none;*/
+  font-size: 20px;
 }
 
 #decision-text {
   display: none;
   color: white;
   text-align: center;
-  margin-top: 30%;
-  margin-bottom: 20px;
-  margin: auto;
+  margin-top: 20%;
+  margin-bottom: 10%;
+  width: 60%;
+  margin-left: 20%;
+  font-size: 30px;
+  height: 180px;
 }
 
 .choice-button-1 {
@@ -56,7 +59,7 @@ nav {
   height: 10%;
   float: none;
   margin-left: 20%;
-  margin-top: 20%;
+
 }
 
 .choice-button-2 {
@@ -72,22 +75,49 @@ nav {
   width: 20%;
   height: 10%;
   float: none;
-  margin-left: 20%;
+  margin-left: 40%;
+  margin-right: 40%;
   background-color: red;
   color: black;
+  margin-top: 20%;
+  font-size: 20px;
 }
 
 .combat-text {
   display: none;
   color: white;
-  width: 20%;
+  width: 100%;
+  text-align: center;
+  margin-top: 15%;
+  font-size: 30px;
 }
 
-.decision-button {
+.decision-button-2 {
   display: inline-block;
-  width: 20%;
   height: 10%;
   float: none;
   margin-left: 20%;
+}
 
+.decision-button-1 {
+  display: inline-block;
+  height: 10%;
+  float: none;
+  margin-left: 40%;
+}
+
+.winMessage {
+  text-align: center;
+  margin-top: 30%;
+  color: white;
+}
+
+#restart {
+  width: 30%;
+  background-color: green;
+  width: 20%;
+  height: 10%;
+  margin-top: 10%;
+  margin-left: 40%;
+  font-size: 30px;
 }
