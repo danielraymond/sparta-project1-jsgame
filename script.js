@@ -9,7 +9,7 @@ $(function(){
     "text":["You are at the entrance to the ... 100 metres into the corridor/tunnel you come across two doors. Do you choose the left door or the right door?",
     "You are in a circular room with a basin of water in the middle. The water looks clear and you feel the urge to drink. There is a door at the far side of the room. Do you ",
     "You cup your hands and take a drink. You feel a rush of energy and notice no ill effects.",
-    "You have killed the orc. There is nothing else in the room apart from a thick wooden door.",
+    "You have killed the orc. There is nothing else in the room apart from a large wooden door.",
     "You find yourself in a room with a huge troll. The troll is guarding the treasure. You must fight the troll to get to the treasure."],
     "button1":["go left", "Take a drink.", "Walk through the door", "Attack the troll!"],
     "button2":["go right", "Attack the Orc!", "Ignore the basin and walk through the door.", "Leave through the door."],
@@ -147,7 +147,7 @@ $(function(){
 
   function gameLost() {
     removeCombat();
-    $(".col-md-10").append('<h1 class="winMessage">YOU HAVE LOST!</h1>');
+    $(".col-md-10").append('<h1 class="winMessage">YOU ARE DEAD!</h1>');
     $(".col-md-10").append('<button class="decision-button-1" id="restart">Restart</button>');
     $("#restart").click(restart);
   }
