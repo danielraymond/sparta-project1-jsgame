@@ -38,6 +38,7 @@ nav {
   height: 10%;
   margin-top: 30%;
   margin-left: 40%;
+  visibility: hidden;
 }
 
 #choice-one {
@@ -64,4 +65,21 @@ nav {
   display: inline-block;
   float: none;
   margin-left: 20%;
+}
+
+.combat-roll-button {
+  /*visibility: hidden;*/
+  width: 20%;
+  height: 10%;
+  display: inline-block;
+  float: none;
+  margin-left: 20%;
+  background-color: red;
+  color: black;
+}
+
+.combat-text {
+  /*visibility: hidden;*/
+  color: white;
+  width: 20%;
 }
