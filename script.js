@@ -57,6 +57,20 @@ $(function(){
 
     "Text if option 2",
 
+    "You are in a room with enemy5. Do combat.",
+
+    "You have defeated enemy5 there is an item do you take it",
+
+    "Text after you take item after fighting enemy5",
+
+    "You are in a room with enemy6. Do combat.",
+
+    "You have defeated enemy6 the exit is at the back of the room",
+
+    "You are in the far right final item room",
+
+    "You are in the final event room would you like to do the event",
+
     "You find yourself in a room with a huge troll. The troll is guarding the treasure. You must fight the troll to get to the treasure."],
 
     "button":["Go left.",
@@ -95,11 +109,23 @@ $(function(){
 
     "say no to item1",
 
-    "go into the next room"],
+    "go into the next room",
+
+    "Attack enemy4",
+
+    "Attack enemy5",
+
+    "Attack enemy6",
+
+    "Say yes to event after combat",
+
+    "Say no to event after combat",
+
+    "After event after combat going into combat item room left"],
 
     "enemy":["Goblin", "Troll", "Giant Spider", "enemy4", "enemy5", "enemy6"],
 
-    "enemyHealth":["1", "1", "1", "1", "1", "1"]
+    "enemyHealth":["0", "0", "0", "0", "0", "0"]
   }
 
   var enemyHealth;
@@ -124,8 +150,8 @@ $(function(){
     $("#decision-text").css("display", "inline-block");
     $(".choice-button-1").css("display", "inline-block");
     $(".choice-button-2").css("display", "inline-block");
-    $(".choice-button-1").html(data.button[0]);
-    $(".choice-button-2").html(data.button[1]);
+    $(".choice-button-1").html("Go left");
+    $(".choice-button-2").html("Go Right");
     $("#decision-text").html(data.text[0]);
     $(this).css("display", "none");
     locationCounter ++;
@@ -138,7 +164,7 @@ $(function(){
     removeDecisionButtons();
     $(".col-md-10").append('<button class="decision-button-1" id="attackGoblin"></button>');
     $("#decision-text").html(data.text[1]);
-    $('#attackGoblin').html(data.button[8]);
+    $('#attackGoblin').html("Attack the Goblin!");
     winTest = "test";
     combatCounter = 0;
     $('#attackGoblin').click(combatReady);
@@ -150,9 +176,9 @@ $(function(){
     $(".col-md-10").append('<button class="decision-button-3" id="orcFightMiddle"></button>')
     $(".col-md-10").append('<button class="decision-button-3" id="orcFightRight"></button>')
     $("#decision-text").html(data.text[4]);
-    $("#orcFightLeft").html(data.button[2])
-    $("#orcFightMiddle").html(data.button[3])
-    $("#orcFightRight").html(data.button[4])
+    $("#orcFightLeft").html("go through the left door")
+    $("#orcFightMiddle").html("go through the middle door")
+    $("#orcFightRight").html("go through the right door")
     $("#orcFightLeft").click(orcGoLeft);
     $("#orcFightMiddle").click(orcGoMiddle);
     $("#orcFightRight").click(orcGoRight);
@@ -164,8 +190,8 @@ $(function(){
     $(".col-md-10").append('<button class="decision-button-2" id="drink"></button>')
     $(".col-md-10").append('<button class="decision-button-2" id="noDrink"></button>');
     $("#decision-text").html(data.text[2]);
-    $("#drink").html(data.button[5]);
-    $("#noDrink").html(data.button[9]);
+    $("#drink").html("Take a drink.");
+    $("#noDrink").html("Ignore the basin and walk through the door.");
     $("#drink").click(drink);
     $("#noDrink").click(giantSpider);
   }
@@ -175,7 +201,7 @@ $(function(){
     $("#decision-text").html(data.text[3]);
     playerHealth = playerHealth + 6;
     $(".col-md-10").append('<button class="decision-button-1" id="leave"></button>')
-    $("#leave").html(data.button[6]);
+    $("#leave").html("Walk through the door");
     $("#leave").click(giantSpider);
   }
 
@@ -184,8 +210,8 @@ $(function(){
     $('#decision-text').html(data.text[9]);
     $('.col-md-10').append('<button class="decision-button-2" id="eventOne1"></button>');
     $('.col-md-10').append('<button class="decision-button-2" id="eventOne2"></button>');
-    $('#eventOne1').html(data.button[14]);
-    $('#eventOne2').html(data.button[15]);
+    $('#eventOne1').html("Take the helmet");
+    $('#eventOne2').html("Ignore the helmet and leave.");
     $('#eventOne1').click(yesToEvent1);
     $('#eventOne2').click(leftCombatEventRoom);
   }
@@ -195,8 +221,8 @@ $(function(){
     $('#decision-text').html(data.text[12]);
     $('.col-md-10').append('<button class="decision-button-2" id="itemOne1"></button>');
     $('.col-md-10').append('<button class="decision-button-2" id="itemOne2"></button>');
-    $('#itemOne1').html(data.button[16]);
-    $('#itemOne2').html(data.button[17]);
+    $('#itemOne1').html("Take the item");
+    $('#itemOne2').html("Ignore the item");
     $('#itemOne1').click(yesToItem1);
     $('#itemOne2').click(leftCombatEventRoom);
   }
@@ -205,7 +231,7 @@ $(function(){
     removeDecisionButtons();
     $('#decision-text').html(data.text[15]);
     $('.col-md-10').append('<button class="decision-button-1" id="nothingRoom1"></button>');
-    $('#nothingRoom1').html(data.button[18]);
+    $('#nothingRoom1').html("Leave the room");
     $('#nothingRoom1').click(joinedItemRoom);
   }
 
@@ -213,7 +239,7 @@ $(function(){
     removeDecisionButtons();
     $(".col-md-10").append('<button class="decision-button-1" id="attackSpider"></button>');
     $("#decision-text").html(data.text[5]);
-    $('#attackSpider').html(data.button[11]);
+    $('#attackSpider').html("Attack the Giant Spider!");
     winTest = "giantSpider";
     combatCounter = 2;
     $('#attackSpider').click(combatReady(combatCounter));
@@ -224,8 +250,8 @@ $(function(){
     $(".col-md-10").append('<button class="decision-button-2" id="spiderWinItem"></button>');
     $(".col-md-10").append('<button class="decision-button-2" id="spiderWinNoItem"></button>');
     $('#decision-text').html(data.text[6]);
-    $('#spiderWinItem').html(data.button[12]);
-    $('#spiderWinNoItem').html(data.button[13]);
+    $('#spiderWinItem').html("Take the helmet");
+    $('#spiderWinNoItem').html("Ignore the helmet and leave.");
     $('#spiderWinItem').click(takeHelmet);
     $('#spiderWinNoItem').click(ignoreTheHelmet);
   }
@@ -236,8 +262,8 @@ $(function(){
     playerItems.push("helmet");
     $(".col-md-10").append('<button class="decision-button-2" id="spiderWinGoLeft"></button>');
     $(".col-md-10").append('<button class="decision-button-2" id="spiderWinGoRight"></button>');
-    $('#spiderWinGoLeft').html(data.button[0]);
-    $('#spiderWinGoRight').html(data.button[1]);
+    $('#spiderWinGoLeft').html("Go left.");
+    $('#spiderWinGoRight').html("Go right.");
     $('#spiderWinGoLeft').click(joinedItemRoom);
     $('#spiderWinGoRight').click(eventRoomFarRight);
   }
@@ -247,8 +273,8 @@ $(function(){
     $('#decision-text').html(data.text[8]);
     $(".col-md-10").append('<button class="decision-button-2" id="spiderWinGoLeft"></button>');
     $(".col-md-10").append('<button class="decision-button-2" id="spiderWinGoRight"></button>');
-    $('#spiderWinGoLeft').html(data.button[0]);
-    $('#spiderWinGoRight').html(data.button[1]);
+    $('#spiderWinGoLeft').html("Go left.");
+    $('#spiderWinGoRight').html("Go right.");
     $('#spiderWinGoLeft').click(joinedItemRoom);
     $('#spiderWinGoRight').click(eventRoomFarRight);
   }
@@ -266,24 +292,150 @@ $(function(){
   function leftCombatEventRoom() {
     removeDecisionButtons();
     $('#decision-text').html(data.text[16]);
+    $(".col-md-10").append('<button class="decision-button-1" id="attackEnemy4"></button>');
+    winTest = "enemy4";
+    combatCounter = 3;
+    $('#attackEnemy4').html("Attack enemy4");
+    $('#attackEnemy4').click(combatReady);
+  }
+
+  function enemy4Won() {
+    removeCombat();
+    $('#decision-text').html(data.text[17]);
+    $(".col-md-10").append('<button class="decision-button-2" id="enemy4WinEventYes"></button>');
+    $(".col-md-10").append('<button class="decision-button-2" id="enemy4WinEventNo"></button>');
+    $('#enemy4WinEventYes').html("Do the event");
+    $('#enemy4WinEventNo').html("Don't do the event");
+    $('#enemy4WinEventYes').click(combatEventYes);
+    $('#enemy4WinEventNo').click(leftCombatItemRoom);
+  }
+
+  function combatEventYes() {
+    removeDecisionButtons();
+    $('#decision-text').html(data.text[18]);
+    $(".col-md-10").append('<button class="decision-button-1" id="enterCombatItemAfterEvent"></button>');
+    $('#enterCombatItemAfterEvent').html("Leave the room");
+    $('#enterCombatItemAfterEvent').click(leftCombatItemRoom);
   }
 
   function joinedItemRoom() {
     removeDecisionButtons();
     $('#decision-text').html(data.text[20]);
+    $(".col-md-10").append('<button class="decision-button-2" id="joinedItemSayYes"></button>');
+    $(".col-md-10").append('<button class="decision-button-2" id="joinedItemSayNo"></button>');
+    $('#joinedItemSayYes').html("Take the item");
+    $('#joinedItemSayNo').html("Ignore the item");
+    $('#joinedItemSayYes').click(joinedItemYes);
+    $('#joinedItemSayNo').click(leftCombatItemRoom);
   }
 
   function eventRoomFarRight() {
     removeDecisionButtons();
     $('#decision-text').html(data.text[23]);
+    $(".col-md-10").append('<button class="decision-button-3" id="rightEventSayYes"></button>');
+    $(".col-md-10").append('<button class="decision-button-3" id="rightEventSayNoLeft"></button>');
+    $(".col-md-10").append('<button class="decision-button-3" id="rightEventSayNoRight"></button>');
+    $('#rightEventSayYes').html("Do the event!");
+    $('#rightEventSayNoLeft').html("Leave through the left passage.");
+    $('#rightEventSayNoRight').html("Leave through the right passage.");
+    $('#rightEventSayYes').click(rightEventYes);
+    $('#rightEventSayNoLeft').click(rightEventNoLeft);
+    $('#rightEventSayNoRight').click(rightEventNoRight);
   }
 
-  // function boss(){
-  //   removeDecisionButtons();
-  //   combatCounter = 1;
-  //   winTest = "boss";
-  //   combatReady();
-  // }
+  function rightEventYes() {
+    removeDecisionButtons();
+    $('#decision-text').html(data.text[24]);
+  }
+
+  function rightEventNoLeft() {
+    removeDecisionButtons();
+    $('#decision-text').html(data.text[29]);
+    $(".col-md-10").append('<button class="decision-button-1" id="attackEnemy6"></button>');
+    winTest = "enemy5";
+    winTest = "enemy6";
+    combatCounter = 5;
+    $("#attackEnemy6").html("Attack enemy6");
+    $("#attackEnemy6").click(combatReady);
+  }
+
+  function rightEventNoRight() {
+    removeDecisionButtons();
+    $('#decision-text').html(data.text[31]);
+    $(".col-md-10").append('<button class="decision-button-2" id="lastItemSayYes"></button>');
+    $(".col-md-10").append('<button class="decision-button-2" id="lastItemSayNo"></button>');
+    $('#lastItemSayYes').html("Take the item");
+    $('#lastItemSayNo').html("Ignore the item");
+    $('#lastItemYes').click(lastItemYes);
+    $('#lastItemSayNo').click(finalEventRoom);
+  }
+
+  function lastItemYes() {
+    removeDecisionButtons();
+  }
+
+  function enemy6Won() {
+    removeCombat();
+    $('#decision-text').html(data.text[30]);
+    $(".col-md-10").append('<button class="decision-button-1" id="Enemy6WinLeave"></button>');
+    $('#Enemy6WinLeave').html("Leave through the door");
+    $('#Enemy6WinLeave').click(finalEventRoom);
+  }
+
+  function joinedItemYes() {
+    removeDecisionButtons();
+    $('#decision-text').html(data.text[20]);
+    $(".col-md-10").append('<button class="decision-button-1" id="joinedItemYesDone"></button>');
+    $('joinedItemYesDone').html("Leave the room");
+    $('joinedItemYesDone').click(leftCombatItemRoom);
+  }
+
+  function leftCombatItemRoom() {
+    removeDecisionButtons();
+    $('#decision-text').html(data.text[26]);
+    $(".col-md-10").append('<button class="decision-button-1" id="attackEnemy5"></button>');
+    winTest = "enemy5";
+    combatCounter = "4";
+    $("#attackEnemy5").html("Attack enemy5");
+    $("#attackEnemy5").click(combatReady);
+  }
+
+  function enemy5Won() {
+    removeCombat();
+    $('#decision-text').html(data.text[27]);
+    $(".col-md-10").append('<button class="decision-button-2" id="combatItemRoomYes"></button>');
+    $(".col-md-10").append('<button class="decision-button-2" id="combatItemRoomNo"></button>');
+    $('#combatItemRoomYes').html("Take the item");
+    $('#combatItemRoomNo').html("Ignore the item");
+    $('#combatItemRoomYes').click(combatItemRoomTakeItem);
+    $('#combatItemRoomNo').click(boss);
+  }
+
+  function combatItemRoomTakeItem() {
+    removeDecisionButtons();
+  }
+
+  function finalEventRoom() {
+    removeDecisionButtons();
+    $('#decision-text').html(data.text[32]);
+    $(".col-md-10").append('<button class="decision-button-2" id="finalEventYes"></button>');
+    $(".col-md-10").append('<button class="decision-button-2" id="finalEventNo"></button>');
+    $('#finalEventYes').html("Do the final event");
+    $('#finalEventNo').html("Don't do the final event");
+    $('#finalEventYes').click(finalEventYes);
+    $('#finalEventNo').click(boss);
+  }
+
+  function finalEventYes() {
+    removeDecisionButtons();
+  }
+
+  function boss(){
+    removeDecisionButtons();
+    combatCounter = 1;
+    winTest = "boss";
+    combatReady();
+  }
 
   // function to prepare screen for combat
   function combatReady() {
@@ -343,6 +495,12 @@ $(function(){
       spiderWin();
     } else if (winTest === "boss") {
       gameWon();
+    } else if (winTest === "enemy4") {
+      enemy4Won();
+    } else if (winTest === "enemy5") {
+      enemy5Won();
+    } else if (winTest === "enemy6") {
+      enemy6Won();
     }
   }
 
