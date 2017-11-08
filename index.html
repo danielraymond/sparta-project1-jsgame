@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Sparta Game</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+    <link rel="stylesheet" href="./style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="./script.js"></script>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div id="navbar-column" class="col-md-12">
+          <nav class="navbar navbar-default navbar-fixed-top">
+            <ul class="nav nav-pills">
+              <li class="navbar-list" role="presentation"><a  href="#">Top</a></li>
+              <li class="navbar-list" role="presentation"><a href="#bottom">Game</a></li>
+              <li class="navbar-list" role="presentation"><a href="#bottom">Contact</a></li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+      <div id="top" class="row">
+        <div class="col-md-12"></div>
+      </div>
+      <div id="bottom" class="row">
+        <div class="col-md-1"></div>
+        <!-- Game content in here  -->
+        <div class="col-md-10">
+          <button id="start-button" type="button" name="button">START GAME!</button>
+          <p id="decision-text"></p>
+          <button id="choiceOne" class="choice-button-1" type="button" name="button"></button>
+          <button id="choiceTwo" class="choice-button-2" type="button" name="button"></button>
+          <button class="combat-roll-button" type="button" name="button">Roll to attack!</button>
+          <p class="combat-text">You are in combat</p>
+        </div>
+        <div class="col-md-1"></div>
+      </div>
+    </div>
+  </body>
+</html>
