@@ -8,17 +8,59 @@ $(function(){
   // game options
   var data =  {
     "text":["You are at the entrance to the ... 100 metres into the corridor/tunnel you come across two doors. Do you choose the left door or the right door?",
-    "You see a small goblin sleeping in front of you. As you try to slip past your foot knocks against loose metal chain on the floor. The goblin wakes instantly and charges wielding a small dagger!",
+
+    "You see a small goblin sleeping in front of you. As you try to slip past your foot knocks against a loose metal chain on the floor. The goblin wakes instantly and charges wielding a small dagger!",
+
     "You are in a circular room with a basin of water in the middle. The water looks clear and you feel the urge to drink. There is a door at the far side of the room. Do you ...",
+
     "You cup your hands and take a drink. You feel a rush of energy and notice no ill effects.",
+
     "You have killed the goblin. There are three doors to choose from. There is a bright light coming from behind the left door. The middle door looks heavier and has iron studs dotted over it. The left door looks to be the most used of the three as the door knob is worn smooth with use. Do you ...",
+
+    "You enter a large, dark and foul smelling room. As you take a step forwards you feel something brush against your face. It is a spider's web, but the strands are thicker than any you have ever seen. Suddenly out of the darkness a spider the size of a large dog rushes at you.",
+
+    "The ruined body of the spider slumps to the side. On your way towards the far end of the room you brush against the skeleton of a man clad in full armour. Most of it looks inferior to your own however his helmet is of far better quality than anything else he was wearing. Do you ...",
+
+    "You place the helmet on your head and go to leave. You leave the room through the far door. After a few metres the corridor splits. Which way would you like to go?",
+
     "You find yourself in a room with a huge troll. The troll is guarding the treasure. You must fight the troll to get to the treasure."],
-    "button":["go left", "go right", "go through the left door", "go through the middle door", "go through the right door", "Take a drink.", "Walk through the door", "Attack the troll!", "Attack the Goblin!", "Ignore the basin and walk through the door.", "Leave through the door.", "Attack the Giant Spider"],
+
+    "button":["Go left",
+
+    "Go right",
+
+    "go through the left door",
+
+    "go through the middle door",
+
+    "go through the right door",
+
+    "Take a drink.",
+
+    "Walk through the door",
+
+    "Attack the troll!",
+
+    "Attack the Goblin!",
+
+    "Ignore the basin and walk through the door.",
+
+    "Leave through the door.",
+
+    "Attack the Giant Spider",
+
+    "Take the helmet",
+
+    "Ignore the helmet and leave."],
+
     "enemy":["Goblin", "Troll", "Giant Spider", "enemy4", "enemy5", "enemy6"],
+
     "enemyHealth":["4", "10", "8"]
   }
 
   var enemyHealth;
+  var possibleItems = ["item1", "helmet", "item3", "item4", "item5"]
+  var playerItems = ["sword", "chicken"];
 
   // setting listeners on game buttons and functions that it applies
   function setGameListeners() {
@@ -57,7 +99,6 @@ $(function(){
 
   function orcWin() {
     removeCombat();
-    $("#decision-text").css("display", "inline-block");
     $(".col-md-10").append('<button class="decision-button-3" id="orcFightLeft"></button>')
     $(".col-md-10").append('<button class="decision-button-3" id="orcFightMiddle"></button>')
     $(".col-md-10").append('<button class="decision-button-3" id="orcFightRight"></button>')
@@ -107,6 +148,7 @@ $(function(){
   function giantSpider() {
     removeDecisionButtons();
     $(".col-md-10").append('<button class="decision-button-1" id="attackSpider"></button>');
+    $("#decision-text").html(data.text[5]);
     $('#attackSpider').html(data.button[11]);
     winTest = "giantSpider"
     combatCounter = 2;
@@ -115,6 +157,33 @@ $(function(){
 
   function spiderWin() {
     removeCombat();
+    $(".col-md-10").append('<button class="decision-button-2" id="spiderWinItem"></button>');
+    $(".col-md-10").append('<button class="decision-button-2" id="spiderWinNoItem"></button>');
+    $('#decision-text').html(data.text[6]);
+    $('#spiderWinItem').html(data.button[12]);
+    $('#spiderWinNoItem').html(data.button[13]);
+    $('#spiderWinItem').click(takeTheHelmet);
+    $('#spiderWinItem').click(ignoreTheHelmet);
+  }
+
+  function takeTheHelmet() {
+    removeDecisionButtons();
+    playerItems.push("helmet");
+    var newItem = "helmet"
+    checkForItems(newItem);
+    // for (i = 0; possibleItems.length; i++) {
+    //   for (var j = 0; j < playerItems.length; j++) {
+    //     if (playerItems[j] === possibleItems[i]) {
+    //       alert("You have picked up the helmet");
+    //       break;
+    //     }
+    //
+    //   }
+    // }
+  }
+
+  function ignoreTheHelmet() {
+    removeDecisionButtons();
   }
 
   function boss(){
@@ -171,6 +240,7 @@ $(function(){
     $(".combat-text").html("You are in combat")
     $(".combat-roll-button").css("display", "none");
     $(".combat-text").css("display", "none");
+    $('#decision-text').css("display", "inline-block");
   }
 
   // function to go to next function if combat is won
@@ -207,6 +277,14 @@ $(function(){
     locationCounter = 0;
     combatCounter = 0;
     startGame();
+  }
+
+  function checkForItems(item) {
+    for (i = 0; i < playerItems.length ; i++) {
+      if (playerItems[i] === item) {
+        alert("You have " + item);
+      }
+    }
   }
 
   setGameListeners();
