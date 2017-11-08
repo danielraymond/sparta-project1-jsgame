@@ -13,9 +13,9 @@ $(function(){
     "You cup your hands and take a drink. You feel a rush of energy and notice no ill effects.",
     "You have killed the goblin. There are three doors to choose from. There is a bright light coming from behind the left door. The middle door looks heavier and has iron studs dotted over it. The left door looks to be the most used of the three as the door knob is worn smooth with use. Do you ...",
     "You find yourself in a room with a huge troll. The troll is guarding the treasure. You must fight the troll to get to the treasure."],
-    "button":["go left", "go right", "go through the left door", "go through the middle door", "go through the right door", "Take a drink.", "Walk through the door", "Attack the troll!", "Attack the Goblin!", "Ignore the basin and walk through the door.", "Leave through the door."],
+    "button":["go left", "go right", "go through the left door", "go through the middle door", "go through the right door", "Take a drink.", "Walk through the door", "Attack the troll!", "Attack the Goblin!", "Ignore the basin and walk through the door.", "Leave through the door.", "Attack the Giant Spider"],
     "enemy":["Goblin", "Troll", "Giant Spider", "enemy4", "enemy5", "enemy6"],
-    "enemyHealth":["4", "10"]
+    "enemyHealth":["4", "10", "8"]
   }
 
   var enemyHealth;
@@ -79,7 +79,7 @@ $(function(){
     $("#drink").html(data.button[5])
     $("#noDrink").html(data.button[9])
     $("#drink").click(drink);
-    $("#noDrink").click(boss);
+    $("#noDrink").click(giantSpider);
   }
 
   function drink() {
@@ -88,7 +88,7 @@ $(function(){
     playerHealth = playerHealth + 6;
     $(".col-md-10").append('<button class="decision-button-1" id="leave"></button>')
     $("#leave").html(data.button[6]);
-    $("#leave").click(boss);
+    $("#leave").click(giantSpider);
   }
 
   function orcGoLeft() {
@@ -104,6 +104,18 @@ $(function(){
     removeDecisionButtons();
   }
 
+  function giantSpider() {
+    removeDecisionButtons();
+    $(".col-md-10").append('<button class="decision-button-1" id="attackSpider"></button>');
+    $('#attackSpider').html(data.button[11]);
+    winTest = "giantSpider"
+    combatCounter = 2;
+    $('#attackSpider').click(combatReady);
+  }
+
+  function spiderWin() {
+    removeCombat();
+  }
 
   function boss(){
     removeDecisionButtons();
@@ -165,6 +177,8 @@ $(function(){
   function victory() {
     if (winTest === "test") {
       orcWin();
+    } else if (winTest === "giantSpider") {
+      spiderWin();
     } else if (winTest === "boss") {
       gameWon();
     }
