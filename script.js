@@ -23,6 +23,36 @@ $(function(){
 
     "You place the helmet on your head and go to leave. You leave the room through the far door. After a few metres the corridor splits. Which way would you like to go?",
 
+    "You leave the room through the far door. After a few metres the corridor splits. Which way would you like to go?",
+
+    "You are in a room with an event. Do you (2 options)...",
+
+    "Text if yes",
+
+    "Text if no",
+
+    "You are in a room with an item. Do you (2 options)...",
+
+    "Text if no",
+
+    "Text if yes",
+
+    "You are in a room with nothing in it ...(1 option)",
+
+    "You are in a room with combat and an event. combat starts",
+
+    "You have killed the enemy now for the event. (2 options)",
+
+    "Text for the event yes.",
+
+    "Text for the event no",
+
+    "You are in a room with an item (2 options)",
+
+    "Text if yes",
+
+    "Text if no",
+
     "You find yourself in a room with a huge troll. The troll is guarding the treasure. You must fight the troll to get to the treasure."],
 
     "button":["Go left",
@@ -51,16 +81,27 @@ $(function(){
 
     "Take the helmet",
 
-    "Ignore the helmet and leave."],
+    "Ignore the helmet and leave.",
+
+    "say yes to event1",
+
+    "say no to event1",
+
+    "say yes to item1",
+
+    "say no to item1",
+
+    "go into the next room"],
 
     "enemy":["Goblin", "Troll", "Giant Spider", "enemy4", "enemy5", "enemy6"],
 
-    "enemyHealth":["4", "10", "8"]
+    "enemyHealth":["4", "12", "8", "5", "7", "10"]
   }
 
   var enemyHealth;
-  var possibleItems = ["item1", "helmet", "item3", "item4", "item5"]
-  var playerItems = ["sword", "chicken"];
+  var playerItems = [];
+  var itemCheck = null;
+  var playerHasItem = null;
 
   // setting listeners on game buttons and functions that it applies
   function setGameListeners() {
@@ -117,8 +158,8 @@ $(function(){
     $(".col-md-10").append('<button class="decision-button-2" id="drink"></button>')
     $(".col-md-10").append('<button class="decision-button-2" id="noDrink"></button>');
     $("#decision-text").html(data.text[2]);
-    $("#drink").html(data.button[5])
-    $("#noDrink").html(data.button[9])
+    $("#drink").html(data.button[5]);
+    $("#noDrink").html(data.button[9]);
     $("#drink").click(drink);
     $("#noDrink").click(giantSpider);
   }
@@ -134,15 +175,32 @@ $(function(){
 
   function orcGoLeft() {
     removeDecisionButtons();
-
+    $('#decision-text').html(data.text[9]);
+    $('.col-md-10').append('<button class="decision-button-2" id="eventOne1"></button>');
+    $('.col-md-10').append('<button class="decision-button-2" id="eventOne2"></button>');
+    $('#eventOne1').html(data.button[14]);
+    $('#eventOne2').html(data.button[15]);
+    $('#eventOne1').click(yesToEvent1);
+    $('#eventOne2').click(combatAndEventRoom);
   }
 
   function orcGoMiddle() {
     removeDecisionButtons();
+    $('#decision-text').html(data.text[12]);
+    $('.col-md-10').append('<button class="decision-button-2" id="itemOne1"></button>');
+    $('.col-md-10').append('<button class="decision-button-2" id="itemOne2"></button>');
+    $('#itemOne1').html(data.button[16]);
+    $('#itemOne2').html(data.button[17]);
+    $('#itemOne1').click(yesToItem1);
+    $('#itemOne2').click(combatAndEventRoom);
   }
 
   function orcGoRight() {
     removeDecisionButtons();
+    $('#decision-text').html(data.text[15]);
+    $('.col-md-10').append('<button class="decision-button-1" id="nothingRoom1"></button>');
+    $('#nothingRoom1').html(data.button[18]);
+    $('#nothingRoom1').click(joinedItemRoom);
   }
 
   function giantSpider() {
@@ -169,21 +227,38 @@ $(function(){
   function takeTheHelmet() {
     removeDecisionButtons();
     playerItems.push("helmet");
-    var newItem = "helmet"
-    checkForItems(newItem);
-    // for (i = 0; possibleItems.length; i++) {
-    //   for (var j = 0; j < playerItems.length; j++) {
-    //     if (playerItems[j] === possibleItems[i]) {
-    //       alert("You have picked up the helmet");
-    //       break;
-    //     }
-    //
-    //   }
+    // var newItem = "helmet"
+    // checkForItems(newItem);
+    // if (playerHasItem === true) {
+    //   alert("it works")
     // }
+    $('#decision-text').html(data.text[7]);
+    $(".col-md-10").append('<button class="decision-button-2" id="spiderWinGoLeft"></button>');
+    $(".col-md-10").append('<button class="decision-button-2" id="spiderWinGoRight"></button>');
+    $('#spiderWinGoLeft').html(data.button[0]);
+    $('#spiderWinGoRight').html(data.button[1]);
+    $('#spiderWinGoLeft').click(joinedItemRoom);
+    $('#spiderWinGoRight').click(eventRoomFarRight);
+  }
+
+  function leftCombatEventRoom() {
+    removeDecisionButtons();
+    $('#decision-text').html(data.text[7]);
+  }
+
+  function joinedItemRoom() {
+    removeDecisionButtons();
+    $('#decision-text').html(data.text[7]);
+  }
+
+  function eventRoomFarRight() {
+    removeDecisionButtons();
+    $('#decision-text').html(data.text[7]);
   }
 
   function ignoreTheHelmet() {
     removeDecisionButtons();
+    $('#decision-text').html(data.text[7]);
   }
 
   function boss(){
@@ -279,10 +354,10 @@ $(function(){
     startGame();
   }
 
-  function checkForItems(item) {
+  function checkForItems(itemCheck) {
     for (i = 0; i < playerItems.length ; i++) {
-      if (playerItems[i] === item) {
-        alert("You have " + item);
+      if (playerItems[i] === itemCheck) {
+        playerHasItem = true;
       }
     }
   }
