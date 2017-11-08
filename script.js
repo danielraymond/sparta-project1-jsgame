@@ -1,9 +1,7 @@
 $(function(){
 
-  var locationCounter = 0;
-  var combatCounter = 0;
+  var locationCounter = null;
   var playerHealth = 12;
-  var winTest = null;
 
   // game options
   var data =  {
@@ -27,15 +25,15 @@ $(function(){
 
     "You are in a room with an event. Do you (2 options)...",
 
-    "Text if yes",
+    "Text if yes event1",
 
-    "Text if no",
+    "Text if no event1",
 
     "You are in a room with an item. Do you (2 options)...",
 
-    "Text if no",
+    "Text if no item1",
 
-    "Text if yes",
+    "Text if yes item1",
 
     "You are in a room with nothing in it ...(1 option)",
 
@@ -53,11 +51,17 @@ $(function(){
 
     "Text if no",
 
+    "You are in a room with an event. (2 options)",
+
+    "Text if option 1",
+
+    "Text if option 2",
+
     "You find yourself in a room with a huge troll. The troll is guarding the treasure. You must fight the troll to get to the treasure."],
 
-    "button":["Go left",
+    "button":["Go left.",
 
-    "Go right",
+    "Go right.",
 
     "go through the left door",
 
@@ -95,13 +99,15 @@ $(function(){
 
     "enemy":["Goblin", "Troll", "Giant Spider", "enemy4", "enemy5", "enemy6"],
 
-    "enemyHealth":["4", "12", "8", "5", "7", "10"]
+    "enemyHealth":["1", "1", "1", "1", "1", "1"]
   }
 
   var enemyHealth;
-  var playerItems = [];
+  var playerItems = [""];
   var itemCheck = null;
   var playerHasItem = null;
+  var combatCounter = null;
+  var winTest = null;
 
   // setting listeners on game buttons and functions that it applies
   function setGameListeners() {
@@ -181,7 +187,7 @@ $(function(){
     $('#eventOne1').html(data.button[14]);
     $('#eventOne2').html(data.button[15]);
     $('#eventOne1').click(yesToEvent1);
-    $('#eventOne2').click(combatAndEventRoom);
+    $('#eventOne2').click(leftCombatEventRoom);
   }
 
   function orcGoMiddle() {
@@ -192,7 +198,7 @@ $(function(){
     $('#itemOne1').html(data.button[16]);
     $('#itemOne2').html(data.button[17]);
     $('#itemOne1').click(yesToItem1);
-    $('#itemOne2').click(combatAndEventRoom);
+    $('#itemOne2').click(leftCombatEventRoom);
   }
 
   function orcGoRight() {
@@ -208,9 +214,9 @@ $(function(){
     $(".col-md-10").append('<button class="decision-button-1" id="attackSpider"></button>');
     $("#decision-text").html(data.text[5]);
     $('#attackSpider').html(data.button[11]);
-    winTest = "giantSpider"
+    winTest = "giantSpider";
     combatCounter = 2;
-    $('#attackSpider').click(combatReady);
+    $('#attackSpider').click(combatReady(combatCounter));
   }
 
   function spiderWin() {
@@ -220,19 +226,14 @@ $(function(){
     $('#decision-text').html(data.text[6]);
     $('#spiderWinItem').html(data.button[12]);
     $('#spiderWinNoItem').html(data.button[13]);
-    $('#spiderWinItem').click(takeTheHelmet);
-    $('#spiderWinItem').click(ignoreTheHelmet);
+    $('#spiderWinItem').click(takeHelmet);
+    $('#spiderWinNoItem').click(ignoreTheHelmet);
   }
 
-  function takeTheHelmet() {
+  function takeHelmet() {
     removeDecisionButtons();
-    playerItems.push("helmet");
-    // var newItem = "helmet"
-    // checkForItems(newItem);
-    // if (playerHasItem === true) {
-    //   alert("it works")
-    // }
     $('#decision-text').html(data.text[7]);
+    playerItems.push("helmet");
     $(".col-md-10").append('<button class="decision-button-2" id="spiderWinGoLeft"></button>');
     $(".col-md-10").append('<button class="decision-button-2" id="spiderWinGoRight"></button>');
     $('#spiderWinGoLeft').html(data.button[0]);
@@ -241,32 +242,48 @@ $(function(){
     $('#spiderWinGoRight').click(eventRoomFarRight);
   }
 
+  function ignoreTheHelmet() {
+    removeDecisionButtons();
+    $('#decision-text').html(data.text[8]);
+    $(".col-md-10").append('<button class="decision-button-2" id="spiderWinGoLeft"></button>');
+    $(".col-md-10").append('<button class="decision-button-2" id="spiderWinGoRight"></button>');
+    $('#spiderWinGoLeft').html(data.button[0]);
+    $('#spiderWinGoRight').html(data.button[1]);
+    $('#spiderWinGoLeft').click(joinedItemRoom);
+    $('#spiderWinGoRight').click(eventRoomFarRight);
+  }
+
+  function yesToItem1() {
+    removeDecisionButtons();
+    $('#decision-text').html(data.text[14]);
+  }
+
+  function yesToEvent1() {
+    removeDecisionButtons();
+    $('#decision-text').html(data.text[10]);
+  }
+
   function leftCombatEventRoom() {
     removeDecisionButtons();
-    $('#decision-text').html(data.text[7]);
+    $('#decision-text').html(data.text[16]);
   }
 
   function joinedItemRoom() {
     removeDecisionButtons();
-    $('#decision-text').html(data.text[7]);
+    $('#decision-text').html(data.text[20]);
   }
 
   function eventRoomFarRight() {
     removeDecisionButtons();
-    $('#decision-text').html(data.text[7]);
+    $('#decision-text').html(data.text[23]);
   }
 
-  function ignoreTheHelmet() {
-    removeDecisionButtons();
-    $('#decision-text').html(data.text[7]);
-  }
-
-  function boss(){
-    removeDecisionButtons();
-    combatCounter = 1;
-    winTest = "boss";
-    combatReady();
-  }
+  // function boss(){
+  //   removeDecisionButtons();
+  //   combatCounter = 1;
+  //   winTest = "boss";
+  //   combatReady();
+  // }
 
   // function to prepare screen for combat
   function combatReady() {
@@ -332,6 +349,7 @@ $(function(){
   // restart screen if player won
   function gameWon() {
     removeCombat();
+    $('#decision-text').css("display", "none");
     $(".col-md-10").append('<h1 class="winMessage">YOU HAVE WON!</h1>');
     $(".col-md-10").append('<button class="decision-button-1" id="restart">Restart</button>');
     $("#restart").click(restart);
@@ -340,6 +358,7 @@ $(function(){
   // restart screen if player lost
   function gameLost() {
     removeCombat();
+    $('#decision-text').css("display", "none");
     $(".col-md-10").append('<h1 class="winMessage">YOU ARE DEAD!</h1>');
     $(".col-md-10").append('<button class="decision-button-1" id="restart">Restart</button>');
     $("#restart").click(restart);
