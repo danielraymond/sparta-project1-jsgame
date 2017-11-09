@@ -42,9 +42,9 @@ $(function(){
 
     "Text for the event no",
 
-    "You are in a room with an item (2 options)",
+    "You find yourself in some kind of storage room. There are hundreds of objects littering the floor. You rummage through and realise that it is all either broken or of no value. As you go to leave a shiny object on top of an old table catches your eye. It is a ring in the shape of a skull. Do you ...",
 
-    "Text if yes",
+    "You notice no immediate effect so you decide to move on.",
 
     "Text if no",
 
@@ -54,11 +54,11 @@ $(function(){
 
     "Text if option 2",
 
-    "You are in a room with enemy5. Do combat.",
+    "You travel down a long corridor with paths forking in on either side. You follow the main path and everntually reached an enormous room which is largely empty. In the center of the room however there is a large troll. He stands up as soon as you enter and bellows in anger. He lumbers towards you ...",
 
-    "You have defeated enemy5 there is an item do you take it",
+    "You have defeated troll there is an item do you take it",
 
-    "Text after you take item after fighting enemy5",
+    "Text after you take item after fighting troll",
 
     "You are in a room with enemy6. Do combat.",
 
@@ -68,11 +68,13 @@ $(function(){
 
     "You are in the final event room would you like to do the event",
 
+    "As you touch the orb white light fills your vision. Your sight slowly returns to normal and you find yourself in some kind of storage room. There are hundreds of objects littering the floor. You rummage through and realise that it is all either broken or of no value. As you go to leave a shiny object on top of an old table catches your eye. It is a ring in the shape of a skull. Do you ...",
+
     "You find yourself in a room with a huge troll. The troll is guarding the treasure. You must fight the troll to get to the treasure."],
 
-    "enemy":["Goblin", "Boss", "Giant Spider", "enemy4", "enemy5", "enemy6"],
+    "enemy":["Goblin", "Boss", "Giant Spider", "enemy4", "troll", "enemy6"],
 
-    "enemyHealth":["100", "3", "4", "2", "1", "10"]
+    "enemyHealth":["3", "3", "3", "3", "3", "3"]
   }
 
   // global variables
@@ -189,7 +191,7 @@ $(function(){
     $('.col-md-10').append('<button class="decision-button-2" id="itemOne2"></button>');
     $('#itemOne1').html("Take the wristband and slip it over your wrist for safekeeping");
     $('#itemOne2').html("Leave the wristband and move on down the passage.");
-    $('#itemOne1').click(yesToItem1);
+    $('#itemOne1').click(takeWristband);
     $('#itemOne2').click(leftCombatEventRoom);
   }
 
@@ -229,7 +231,6 @@ $(function(){
   function takeHelmet() {
     removeDecisionButtons();
     $('#decision-text').html(data.text[7]);
-    console.log(playerItems[0])
     playerHasHelmet = true;
     $(".col-md-10").append('<button class="decision-button-2" id="spiderWinGoLeft"></button>');
     $(".col-md-10").append('<button class="decision-button-2" id="spiderWinGoRight"></button>');
@@ -239,6 +240,7 @@ $(function(){
     $('#spiderWinGoRight').click(eventRoomFarRight);
   }
 
+  // function to not take the helmet
   function ignoreTheHelmet() {
     removeDecisionButtons();
     $('#decision-text').html(data.text[8]);
@@ -250,7 +252,8 @@ $(function(){
     $('#spiderWinGoRight').click(eventRoomFarRight);
   }
 
-  function yesToItem1() {
+  // function if you take the wristband
+  function takeWristband() {
     removeDecisionButtons();
     $('#decision-text').html(data.text[14]);
     console.log(playerHealth);
@@ -265,11 +268,7 @@ $(function(){
     }
   }
 
-  function yesToEvent1() {
-    removeDecisionButtons();
-    $('#decision-text').html(data.text[10]);
-  }
-
+  // function to initialise combat in left combat event room
   function leftCombatEventRoom() {
     removeDecisionButtons();
     $('#decision-text').html(data.text[16]);
@@ -280,6 +279,7 @@ $(function(){
     $('#attackEnemy4').click(combatReady);
   }
 
+  // function if you defeat enemy 4.
   function enemy4Won() {
     removeCombat();
     $('#decision-text').html(data.text[17]);
@@ -301,11 +301,11 @@ $(function(){
 
   function joinedItemRoomTeleport() {
     removeDecisionButtons();
-    $('#decision-text').html(data.text[20]);
+    $('#decision-text').html(data.text[33]);
     $(".col-md-10").append('<button class="decision-button-2" id="joinedItemSayYes"></button>');
     $(".col-md-10").append('<button class="decision-button-2" id="joinedItemSayNo"></button>');
-    $('#joinedItemSayYes').html("Take the item");
-    $('#joinedItemSayNo').html("Ignore the item");
+    $('#joinedItemSayYes').html("Place the ring on your finger.");
+    $('#joinedItemSayNo').html("Move on.");
     $('#joinedItemSayYes').click(joinedItemYes);
     $('#joinedItemSayNo').click(leftCombatItemRoom);
   }
@@ -315,10 +315,18 @@ $(function(){
     $('#decision-text').html(data.text[20]);
     $(".col-md-10").append('<button class="decision-button-2" id="joinedItemSayYes"></button>');
     $(".col-md-10").append('<button class="decision-button-2" id="joinedItemSayNo"></button>');
-    $('#joinedItemSayYes').html("Take the item");
-    $('#joinedItemSayNo').html("Ignore the item");
+    $('#joinedItemSayYes').html("Place the ring on your finger.");
+    $('#joinedItemSayNo').html("Move on.");
     $('#joinedItemSayYes').click(joinedItemYes);
     $('#joinedItemSayNo').click(leftCombatItemRoom);
+  }
+
+  function joinedItemYes() {
+    removeDecisionButtons();
+    $('#decision-text').html(data.text[21]);
+    $(".col-md-10").append('<button class="decision-button-1" id="joinedItemYes"></button>');
+    $('#joinedItemYes').html("Move on");
+
   }
 
   function eventRoomFarRight() {
@@ -344,7 +352,7 @@ $(function(){
     removeDecisionButtons();
     $('#decision-text').html(data.text[29]);
     $(".col-md-10").append('<button class="decision-button-1" id="attackEnemy6"></button>');
-    winTest = "enemy5";
+    winTest = "troll";
     winTest = "enemy6";
     combatCounter = 5;
     $("#attackEnemy6").html("Attack enemy6");
@@ -385,14 +393,14 @@ $(function(){
   function leftCombatItemRoom() {
     removeDecisionButtons();
     $('#decision-text').html(data.text[26]);
-    $(".col-md-10").append('<button class="decision-button-1" id="attackEnemy5"></button>');
-    winTest = "enemy5";
+    $(".col-md-10").append('<button class="decision-button-1" id="attacktroll"></button>');
+    winTest = "troll";
     combatCounter = "4";
-    $("#attackEnemy5").html("Attack enemy5");
-    $("#attackEnemy5").click(combatReady);
+    $("#attacktroll").html("Attack the troll!");
+    $("#attacktroll").click(combatReady);
   }
 
-  function enemy5Won() {
+  function trollWon() {
     removeCombat();
     $('#decision-text').html(data.text[27]);
     $(".col-md-10").append('<button class="decision-button-2" id="combatItemRoomYes"></button>');
@@ -496,8 +504,8 @@ $(function(){
       gameWon();
     } else if (winTest === "enemy4") {
       enemy4Won();
-    } else if (winTest === "enemy5") {
-      enemy5Won();
+    } else if (winTest === "troll") {
+      trollWon();
     } else if (winTest === "enemy6") {
       enemy6Won();
     }
