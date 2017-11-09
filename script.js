@@ -1,8 +1,5 @@
 $(function(){
 
-  var locationCounter = null;
-  var playerHealth = 12;
-
   // game options
   var data =  {
     "text":["You are at the entrance to the ... 100 metres into the corridor/tunnel you come across two doors. Do you choose the left door or the right door?",
@@ -123,17 +120,24 @@ $(function(){
 
     "After event after combat going into combat item room left"],
 
-    "enemy":["Goblin", "Troll", "Giant Spider", "enemy4", "enemy5", "enemy6"],
+    "enemy":["Goblin", "Boss", "Giant Spider", "enemy4", "enemy5", "enemy6"],
 
-    "enemyHealth":["0", "0", "0", "0", "0", "0"]
+    "enemyHealth":["6", "18", "12", "6", "6", "12"],
+
+    "enemyStamina":["6", "18", "12", "6", "6", "12"]
   }
 
+  // global variables
   var enemyHealth;
+  var enemyStamina;
   var playerItems = [""];
   var itemCheck = null;
   var playerHasItem = null;
   var combatCounter = null;
   var winTest = null;
+  var locationCounter = null;
+  var playerHealth = 12;
+  var playerStamina = 12;
 
   // setting listeners on game buttons and functions that it applies
   function setGameListeners() {
@@ -440,26 +444,42 @@ $(function(){
   // function to prepare screen for combat
   function combatReady() {
     removeDecisionButtons();
-    $(".combat-roll-button").css("display", "inline-block");
+    $(".col-md-10").append('<button class="combat-roll-button" id="heavy"></button>');
+    $(".col-md-10").append('<button class="combat-roll-button" id="light"></button>');
+    $(".col-md-10").append('<button class="combat-roll-button" id="defend"></button>');
+    $('#heavy').html("Heavy Attack!");
+    $('#light').html("Light Attack!");
+    $('#defend').html("Defend!");
+    $('#heavy').click(combat);
+    $('#light').click(combat);
+    $('#defend').click(combat);
+    // $(".combat-roll-button").css("display", "inline-block");
     $(".combat-text").css("display", "inline-block");
     $("#decision-text").css("display", "none");
     enemyHealth = parseInt(data.enemyHealth[combatCounter]);
+    enemyStamina = parseInt(data.enemyStamina[combatCounter]);
   }
 
   // function to engage combat when button is clicked
   function combat() {
-    var playerRoll = Math.floor(Math.random() * 6);
-    var enemyRoll = Math.floor(Math.random() * 6);
-    if (playerRoll > enemyRoll) {
-      var damage = playerRoll - enemyRoll;
-      enemyHealth = enemyHealth - damage;
-      $(".combat-text").html("You did " + damage + " damage. The " + data.enemy[combatCounter] + "'s health is now: " + enemyHealth);
-    } else if (enemyRoll > playerRoll) {
-      var damage = enemyRoll - playerRoll;
-      playerHealth = playerHealth - damage;
-      $(".combat-text").html("The " + data.enemy[combatCounter] + " did " + damage + " damage. Your health is now: " + playerHealth);
-    } else {
-      $(".combat-text").html("You both missed!");
+    // var playerRoll = Math.floor(Math.random() * 6);
+    // var enemyRoll = Math.floor(Math.random() * 6);
+    // if (playerRoll > enemyRoll) {
+    //   var damage = playerRoll - enemyRoll;
+    //   enemyHealth = enemyHealth - damage;
+    //   $(".combat-text").html("You did " + damage + " damage. The " + data.enemy[combatCounter] + "'s health is now: " + enemyHealth);
+    // } else if (enemyRoll > playerRoll) {
+    //   var damage = enemyRoll - playerRoll;
+    //   playerHealth = playerHealth - damage;
+    //   $(".combat-text").html("The " + data.enemy[combatCounter] + " did " + damage + " damage. Your health is now: " + playerHealth);
+    // } else {
+    //   $(".combat-text").html("You both missed!");
+    // }
+    if ($(this).attr('id') == 'heavy') {
+      console.log("You clicked Heavy");
+      debugger;
+    } else if ($(this).attr('id') === 'light') {
+      console.log("You clicked Heavy");
     }
 
     // check to see if player or enemy has died
