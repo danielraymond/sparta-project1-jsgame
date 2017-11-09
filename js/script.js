@@ -32,7 +32,7 @@ $(function(){
 
     "As you slip the wristband over your hand you feel it tighten and you feel a flash of intense pain in your wrist. The pain subsides but you feel weaker. The wristband loosens and you pull it off.",
 
-    "You are in a room with nothing in it ...(1 option)",
+    "You are in a small room with a number of shelves and cupboards along the wall. After looking through the room you find nothing of value.",
 
     "You are in a room with combat and an event. combat starts",
 
@@ -72,22 +72,33 @@ $(function(){
 
     "enemy":["Goblin", "Boss", "Giant Spider", "enemy4", "enemy5", "enemy6"],
 
-    "enemyHealth":["1", "0", "0", "0", "0", "0"]
+    "enemyHealth":["100", "3", "4", "2", "1", "10"]
   }
 
   // global variables
   var enemyHealth;
-  var playerItems = [];
   var itemCheck = null;
   var playerHasItem = null;
   var combatCounter = null;
   var winTest = null;
   var locationCounter = null;
-  var playerHealth = 12;
+  var playerHealth = null;
+  var playerHasHelmet = false;
+  var playerHasSword = false;
+  var playerHasKey = false;
+
+  // function to set player health
+  function setPlayerHealth() {
+    var maxPlayerHealth = 10 + Math.ceil(Math.random() * 10);
+    $(this).css("display", "none");
+    $(".col-md-10").append('<button class="roll-health-button">Roll to set player health!</button>')
+    $('.roll-health-button').click(startGame)
+    playerHealth = maxPlayerHealth;
+  }
 
   // setting listeners on game buttons and functions that it applies
   function setGameListeners() {
-    $("#start-button").click(startGame);
+    $("#start-button").click(setPlayerHealth);
     $(".choice-button-1").click(choice1);
     $(".choice-button-2").click(choice2);
     $(".combat-roll-button").click(combat);
@@ -120,20 +131,22 @@ $(function(){
     $('#attackGoblin').click(combatReady);
   }
 
-  function orcWin() {
+  // function for if you beat the goblin
+  function goblinWin() {
     removeCombat();
-    $(".col-md-10").append('<button class="decision-button-3" id="orcFightLeft"></button>')
-    $(".col-md-10").append('<button class="decision-button-3" id="orcFightMiddle"></button>')
-    $(".col-md-10").append('<button class="decision-button-3" id="orcFightRight"></button>')
+    $(".col-md-10").append('<button class="decision-button-3" id="goblinFightLeft"></button>')
+    $(".col-md-10").append('<button class="decision-button-3" id="goblinFightMiddle"></button>')
+    $(".col-md-10").append('<button class="decision-button-3" id="goblinFightRight"></button>')
     $("#decision-text").html(data.text[4]);
-    $("#orcFightLeft").html("go through the left door")
-    $("#orcFightMiddle").html("go through the middle door")
-    $("#orcFightRight").html("go through the right door")
-    $("#orcFightLeft").click(orcGoLeft);
-    $("#orcFightMiddle").click(orcGoMiddle);
-    $("#orcFightRight").click(orcGoRight);
+    $("#goblinFightLeft").html("go through the left door")
+    $("#goblinFightMiddle").html("go through the middle door")
+    $("#goblinFightRight").html("go through the right door")
+    $("#goblinFightLeft").click(goblinGoLeft);
+    $("#goblinFightMiddle").click(goblinGoMiddle);
+    $("#goblinFightRight").click(goblinGoRight);
   }
 
+  // function if initial decision is go right
   function choice2() {
     $(".choice-button-1").css("display", "none");
     $(".choice-button-2").css("display", "none");
@@ -146,6 +159,7 @@ $(function(){
     $("#noDrink").click(giantSpider);
   }
 
+  // function if player chooses to drink
   function drink() {
     removeDecisionButtons();
     $("#decision-text").html(data.text[3]);
@@ -155,7 +169,8 @@ $(function(){
     $("#leave").click(giantSpider);
   }
 
-  function orcGoLeft() {
+  // function if player goes left after goblin fight
+  function goblinGoLeft() {
     removeDecisionButtons();
     $('#decision-text').html(data.text[9]);
     $('.col-md-10').append('<button class="decision-button-2" id="eventOne1"></button>');
@@ -166,7 +181,8 @@ $(function(){
     $('#eventOne2').click(leftCombatEventRoom);
   }
 
-  function orcGoMiddle() {
+  // function if player takes the middle door after goblin fight
+  function goblinGoMiddle() {
     removeDecisionButtons();
     $('#decision-text').html(data.text[12]);
     $('.col-md-10').append('<button class="decision-button-2" id="itemOne1"></button>');
@@ -177,14 +193,16 @@ $(function(){
     $('#itemOne2').click(leftCombatEventRoom);
   }
 
-  function orcGoRight() {
+  // function if player chooses the right door after goblin fight
+  function goblinGoRight() {
     removeDecisionButtons();
     $('#decision-text').html(data.text[15]);
     $('.col-md-10').append('<button class="decision-button-1" id="nothingRoom1"></button>');
-    $('#nothingRoom1').html("Leave the room");
+    $('#nothingRoom1').html("Leave the room through the far door.");
     $('#nothingRoom1').click(joinedItemRoom);
   }
 
+  // function for giant spide fight
   function giantSpider() {
     removeDecisionButtons();
     $(".col-md-10").append('<button class="decision-button-1" id="attackSpider"></button>');
@@ -195,6 +213,7 @@ $(function(){
     $('#attackSpider').click(combatReady(combatCounter));
   }
 
+  // function if the spider was beaten
   function spiderWin() {
     removeCombat();
     $(".col-md-10").append('<button class="decision-button-2" id="spiderWinItem"></button>');
@@ -206,10 +225,12 @@ $(function(){
     $('#spiderWinNoItem').click(ignoreTheHelmet);
   }
 
+  // function to take helmet item
   function takeHelmet() {
     removeDecisionButtons();
     $('#decision-text').html(data.text[7]);
-    playerItems.push("helmet");
+    console.log(playerItems[0])
+    playerHasHelmet = true;
     $(".col-md-10").append('<button class="decision-button-2" id="spiderWinGoLeft"></button>');
     $(".col-md-10").append('<button class="decision-button-2" id="spiderWinGoRight"></button>');
     $('#spiderWinGoLeft').html("Go left.");
@@ -429,6 +450,11 @@ $(function(){
       $(".combat-text").html("You did " + damage + " damage. The " + data.enemy[combatCounter] + "'s health is now: " + enemyHealth);
     } else if (enemyRoll > playerRoll) {
       var damage = enemyRoll - playerRoll;
+      console.log("damage before check " + damage);
+      if (playerHasHelmet === true) {
+        damage = damage - 1;
+      }
+      console.log("damage after check " + damage);
       playerHealth = playerHealth - damage;
       $(".combat-text").html("The " + data.enemy[combatCounter] + " did " + damage + " damage. Your health is now: " + playerHealth);
     } else {
@@ -463,7 +489,7 @@ $(function(){
   // function to go to next function if combat is won
   function victory() {
     if (winTest === "test") {
-      orcWin();
+      goblinWin();
     } else if (winTest === "giantSpider") {
       spiderWin();
     } else if (winTest === "boss") {
@@ -501,16 +527,8 @@ $(function(){
     winTest = null;
     locationCounter = 0;
     combatCounter = 0;
+    playerItems = [""];
     startGame();
-  }
-
-  // function to check if you have an item
-  function checkForItems(itemCheck) {
-    for (i = 0; i < playerItems.length ; i++) {
-      if (playerItems[i] === itemCheck) {
-        playerHasItem = true;
-      }
-    }
   }
 
   setGameListeners();

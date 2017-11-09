@@ -29,7 +29,8 @@ nav {
 }
 
 .col-md-10 {
-  background-color: black;
+  background-image: url("https://static.pexels.com/photos/220182/pexels-photo-220182.jpeg");
+
 }
 
 #start-button {
@@ -41,9 +42,17 @@ nav {
   font-size: 20px;
 }
 
+.roll-health-button {
+  display: inline-block;
+  height: 10%;
+  float: none;
+  margin-left: 40%;
+  background-color: red;
+}
+
 #decision-text {
   display: none;
-  color: white;
+  color: black;
   text-align: center;
   margin-top: 20%;
   margin-bottom: 10%;
@@ -51,6 +60,7 @@ nav {
   margin-left: 20%;
   font-size: 30px;
   height: 180px;
+  background-color: white;
 }
 
 .choice-button-1 {
@@ -85,7 +95,7 @@ nav {
 
 .combat-text {
   display: none;
-  color: white;
+  color: black;
   width: 100%;
   text-align: center;
   margin-top: 15%;
@@ -116,7 +126,7 @@ nav {
 .winMessage {
   text-align: center;
   margin-top: 30%;
-  color: white;
+  color: black;
 }
 
 #restart {
