@@ -34,11 +34,11 @@ $(function(){
 
     "You are in a small room with a number of shelves and cupboards along the wall. After looking through the room you find nothing of value.",
 
-    "You are in a room with combat and an event. combat starts",
+    "You find some steps and follow them down into a foul smelling cellar. The walls are wet and slimy. There is a path next to a pool of green water. As you edge across the path you suddenly feel water splash over you and are face to face with what you can only describe as a fish monster holding a wicked looking trident ...",
 
-    "You have killed the enemy now for the event. (2 options)",
+    "You disarm the fish monster and drive its spear through it's throat. You look around and for more enemies and notice what looks like an offering of some kind of some hard bread on a table further down the path. You are very hungry and it looks normal. Do you ...",
 
-    "Text for the event yes.",
+    "You eat the bread and immediately regret it. It makes you throw up and you feel much weaker.",
 
     "Text for the event no",
 
@@ -56,9 +56,9 @@ $(function(){
 
     "You travel down a long corridor with paths forking in on either side. You follow the main path and everntually reached an enormous room which is largely empty. In the center of the room however there is a large troll. He stands up as soon as you enter and bellows in anger. He lumbers towards you ...",
 
-    "You have defeated troll there is an item do you take it",
+    "You have defeated troll. You search his body and find a large iron key in a pocket.",
 
-    "Text after you take item after fighting troll",
+    "You place the key into your bag and move on.",
 
     "You are in a room with enemy6. Do combat.",
 
@@ -72,7 +72,7 @@ $(function(){
 
     "You find yourself in a room with a huge troll. The troll is guarding the treasure. You must fight the troll to get to the treasure."],
 
-    "enemy":["Goblin", "Boss", "Giant Spider", "enemy4", "troll", "enemy6"],
+    "enemy":["Goblin", "Boss", "Giant Spider", "Fish Monster", "troll", "enemy6"],
 
     "enemyHealth":["3", "3", "3", "3", "3", "3"]
   }
@@ -88,6 +88,7 @@ $(function(){
   var playerHasHelmet = false;
   var playerHasSword = false;
   var playerHasKey = false;
+  var playerHasRing = false;
 
   // function to set player health
   function setPlayerHealth() {
@@ -204,7 +205,7 @@ $(function(){
     $('#nothingRoom1').click(joinedItemRoom);
   }
 
-  // function for giant spide fight
+  // function for giant spider fight
   function giantSpider() {
     removeDecisionButtons();
     $(".col-md-10").append('<button class="decision-button-1" id="attackSpider"></button>');
@@ -256,7 +257,6 @@ $(function(){
   function takeWristband() {
     removeDecisionButtons();
     $('#decision-text').html(data.text[14]);
-    console.log(playerHealth);
     playerHealth = playerHealth - 2;
     if (playerHealth <= 0) {
       gameLost();
@@ -264,7 +264,6 @@ $(function(){
       $(".col-md-10").append('<button class="decision-button-1" id="wristBandDone"></button>');
       $('#wristBandDone').html("Continue along the passage");
       $('#wristBandDone').click(leftCombatEventRoom);
-      console.log(playerHealth);
     }
   }
 
@@ -275,30 +274,37 @@ $(function(){
     $(".col-md-10").append('<button class="decision-button-1" id="attackEnemy4"></button>');
     winTest = "enemy4";
     combatCounter = 3;
-    $('#attackEnemy4').html("Attack enemy4");
+    $('#attackEnemy4').html("Attack the fish monster!");
     $('#attackEnemy4').click(combatReady);
   }
 
-  // function if you defeat enemy 4.
-  function enemy4Won() {
+  // function if you defeat the fish monster.
+  function fishMonsterWon() {
     removeCombat();
     $('#decision-text').html(data.text[17]);
     $(".col-md-10").append('<button class="decision-button-2" id="enemy4WinEventYes"></button>');
     $(".col-md-10").append('<button class="decision-button-2" id="enemy4WinEventNo"></button>');
-    $('#enemy4WinEventYes').html("Do the event");
-    $('#enemy4WinEventNo').html("Don't do the event");
+    $('#enemy4WinEventYes').html("Eat the bread");
+    $('#enemy4WinEventNo').html("Leave it and move on");
     $('#enemy4WinEventYes').click(combatEventYes);
     $('#enemy4WinEventNo').click(leftCombatItemRoom);
   }
 
+  // function for saying yes to event after combat
   function combatEventYes() {
     removeDecisionButtons();
     $('#decision-text').html(data.text[18]);
-    $(".col-md-10").append('<button class="decision-button-1" id="enterCombatItemAfterEvent"></button>');
-    $('#enterCombatItemAfterEvent').html("Leave the room");
-    $('#enterCombatItemAfterEvent').click(leftCombatItemRoom);
+    playerHealth = playerHealth - 2;
+    if (playerHealth <= 0) {
+      gameLost();
+    } else {
+      $(".col-md-10").append('<button class="decision-button-1" id="enterCombatItemAfterEvent"></button>');
+      $('#enterCombatItemAfterEvent').html("Leave the room");
+      $('#enterCombatItemAfterEvent').click(leftCombatItemRoom);
+    }
   }
 
+  // function for when the player teleports in joinedItemRoom
   function joinedItemRoomTeleport() {
     removeDecisionButtons();
     $('#decision-text').html(data.text[33]);
@@ -306,10 +312,11 @@ $(function(){
     $(".col-md-10").append('<button class="decision-button-2" id="joinedItemSayNo"></button>');
     $('#joinedItemSayYes').html("Place the ring on your finger.");
     $('#joinedItemSayNo').html("Move on.");
-    $('#joinedItemSayYes').click(joinedItemYes);
+    $('#joinedItemSayYes').click(takeRing);
     $('#joinedItemSayNo').click(leftCombatItemRoom);
   }
 
+  // function for when player walks into joinedItemRoom
   function joinedItemRoom() {
     removeDecisionButtons();
     $('#decision-text').html(data.text[20]);
@@ -317,18 +324,20 @@ $(function(){
     $(".col-md-10").append('<button class="decision-button-2" id="joinedItemSayNo"></button>');
     $('#joinedItemSayYes').html("Place the ring on your finger.");
     $('#joinedItemSayNo').html("Move on.");
-    $('#joinedItemSayYes').click(joinedItemYes);
+    $('#joinedItemSayYes').click(takeRing);
     $('#joinedItemSayNo').click(leftCombatItemRoom);
   }
 
-  function joinedItemYes() {
+  // function if player says yes to item option
+  function takeRing() {
     removeDecisionButtons();
     $('#decision-text').html(data.text[21]);
     $(".col-md-10").append('<button class="decision-button-1" id="joinedItemYes"></button>');
     $('#joinedItemYes').html("Move on");
-
+    $('#joinedItemYes').click(leftCombatItemRoom);
   }
 
+  // function for a room with an event in
   function eventRoomFarRight() {
     removeDecisionButtons();
     $('#decision-text').html(data.text[23]);
@@ -339,16 +348,18 @@ $(function(){
     $('#rightEventSayNoLeft').html("Leave through the left passage.");
     $('#rightEventSayNoRight').html("Leave through the right passage.");
     $('#rightEventSayYes').click(rightEventYes);
-    $('#rightEventSayNoLeft').click(rightEventNoLeft);
-    $('#rightEventSayNoRight').click(rightEventNoRight);
+    $('#rightEventSayNoLeft').click(rightEventLeft);
+    $('#rightEventSayNoRight').click(rightEventRight);
   }
 
+  // function if player says yes to event option
   function rightEventYes() {
     removeDecisionButtons();
     $('#decision-text').html(data.text[24]);
   }
 
-  function rightEventNoLeft() {
+  // function if the player goes right after previous room
+  function rightEventLeft() {
     removeDecisionButtons();
     $('#decision-text').html(data.text[29]);
     $(".col-md-10").append('<button class="decision-button-1" id="attackEnemy6"></button>');
@@ -359,7 +370,8 @@ $(function(){
     $("#attackEnemy6").click(combatReady);
   }
 
-  function rightEventNoRight() {
+  // function if the player goes right after previous room
+  function rightEventRight() {
     removeDecisionButtons();
     $('#decision-text').html(data.text[31]);
     $(".col-md-10").append('<button class="decision-button-2" id="lastItemSayYes"></button>');
@@ -405,8 +417,8 @@ $(function(){
     $('#decision-text').html(data.text[27]);
     $(".col-md-10").append('<button class="decision-button-2" id="combatItemRoomYes"></button>');
     $(".col-md-10").append('<button class="decision-button-2" id="combatItemRoomNo"></button>');
-    $('#combatItemRoomYes').html("Take the item");
-    $('#combatItemRoomNo').html("Ignore the item");
+    $('#combatItemRoomYes').html("Take the key");
+    $('#combatItemRoomNo').html("Ignore the key");
     $('#combatItemRoomYes').click(combatItemRoomTakeItem);
     $('#combatItemRoomNo').click(boss);
   }
@@ -503,7 +515,7 @@ $(function(){
     } else if (winTest === "boss") {
       gameWon();
     } else if (winTest === "enemy4") {
-      enemy4Won();
+      fishMonsterWon();
     } else if (winTest === "troll") {
       trollWon();
     } else if (winTest === "enemy6") {
