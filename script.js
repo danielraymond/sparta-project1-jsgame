@@ -20,13 +20,13 @@ $(function(){
 
     "You leave the room through the far door. After a few metres the corridor splits. Which way would you like to go?",
 
-    "You are in a room with an event. Do you (2 options)...",
+    "The door opens easily and you enter a small room with a glowing orb on a pedestal in the center of the room. You know that there is some magic at work here but the effects are unclear. There is a passage way that bends to the left opposite you. Do you ...",
 
     "Text if yes event1",
 
     "Text if no event1",
 
-    "You are in a room with an item. Do you (2 options)...",
+    "You push the door but it doesn't move an inch. You push harder and it moves slowly forward. After about ten seconds of pushing the gap is large enough to slip through. You enter a passageway that bends to the right. As you are walking you notice a small alcove with a chest inside. You open the chest and inside is a thick golden wristband inscribed with room. It looks solid and probably worth a fortune. Do you ...",
 
     "Text if no item1",
 
@@ -70,74 +70,20 @@ $(function(){
 
     "You find yourself in a room with a huge troll. The troll is guarding the treasure. You must fight the troll to get to the treasure."],
 
-    "button":["Go left.",
-
-    "Go right.",
-
-    "go through the left door",
-
-    "go through the middle door",
-
-    "go through the right door",
-
-    "Take a drink.",
-
-    "Walk through the door",
-
-    "Attack the troll!",
-
-    "Attack the Goblin!",
-
-    "Ignore the basin and walk through the door.",
-
-    "Leave through the door.",
-
-    "Attack the Giant Spider",
-
-    "Take the helmet",
-
-    "Ignore the helmet and leave.",
-
-    "say yes to event1",
-
-    "say no to event1",
-
-    "say yes to item1",
-
-    "say no to item1",
-
-    "go into the next room",
-
-    "Attack enemy4",
-
-    "Attack enemy5",
-
-    "Attack enemy6",
-
-    "Say yes to event after combat",
-
-    "Say no to event after combat",
-
-    "After event after combat going into combat item room left"],
-
     "enemy":["Goblin", "Boss", "Giant Spider", "enemy4", "enemy5", "enemy6"],
 
-    "enemyHealth":["6", "18", "12", "6", "6", "12"],
-
-    "enemyStamina":["6", "18", "12", "6", "6", "12"]
+    "enemyHealth":["0", "0", "0", "0", "0", "0"]
   }
 
   // global variables
   var enemyHealth;
-  var enemyStamina;
-  var playerItems = [""];
+  var playerItems = [];
   var itemCheck = null;
   var playerHasItem = null;
   var combatCounter = null;
   var winTest = null;
   var locationCounter = null;
   var playerHealth = 12;
-  var playerStamina = 12;
 
   // setting listeners on game buttons and functions that it applies
   function setGameListeners() {
@@ -214,8 +160,8 @@ $(function(){
     $('#decision-text').html(data.text[9]);
     $('.col-md-10').append('<button class="decision-button-2" id="eventOne1"></button>');
     $('.col-md-10').append('<button class="decision-button-2" id="eventOne2"></button>');
-    $('#eventOne1').html("Take the helmet");
-    $('#eventOne2').html("Ignore the helmet and leave.");
+    $('#eventOne1').html("Touch the orb.");
+    $('#eventOne2').html("Ignore the orb and exit through the passageway.");
     $('#eventOne1').click(yesToEvent1);
     $('#eventOne2').click(leftCombatEventRoom);
   }
@@ -225,7 +171,7 @@ $(function(){
     $('#decision-text').html(data.text[12]);
     $('.col-md-10').append('<button class="decision-button-2" id="itemOne1"></button>');
     $('.col-md-10').append('<button class="decision-button-2" id="itemOne2"></button>');
-    $('#itemOne1').html("Take the item");
+    $('#itemOne1').html("Take the wristband and slip it over your wrist for safekeeping");
     $('#itemOne2').html("Ignore the item");
     $('#itemOne1').click(yesToItem1);
     $('#itemOne2').click(leftCombatEventRoom);
@@ -444,42 +390,28 @@ $(function(){
   // function to prepare screen for combat
   function combatReady() {
     removeDecisionButtons();
-    $(".col-md-10").append('<button class="combat-roll-button" id="heavy"></button>');
-    $(".col-md-10").append('<button class="combat-roll-button" id="light"></button>');
-    $(".col-md-10").append('<button class="combat-roll-button" id="defend"></button>');
-    $('#heavy').html("Heavy Attack!");
-    $('#light').html("Light Attack!");
-    $('#defend').html("Defend!");
-    $('#heavy').click(combat);
-    $('#light').click(combat);
-    $('#defend').click(combat);
-    // $(".combat-roll-button").css("display", "inline-block");
+    $(".col-md-10").append('<button class="combat-roll-button"></button>');
     $(".combat-text").css("display", "inline-block");
     $("#decision-text").css("display", "none");
+    $('.combat-roll-button').html("Attack the " + data.enemy[combatCounter]);
     enemyHealth = parseInt(data.enemyHealth[combatCounter]);
-    enemyStamina = parseInt(data.enemyStamina[combatCounter]);
+    $('.combat-roll-button').click(combat);
   }
 
   // function to engage combat when button is clicked
   function combat() {
-    // var playerRoll = Math.floor(Math.random() * 6);
-    // var enemyRoll = Math.floor(Math.random() * 6);
-    // if (playerRoll > enemyRoll) {
-    //   var damage = playerRoll - enemyRoll;
-    //   enemyHealth = enemyHealth - damage;
-    //   $(".combat-text").html("You did " + damage + " damage. The " + data.enemy[combatCounter] + "'s health is now: " + enemyHealth);
-    // } else if (enemyRoll > playerRoll) {
-    //   var damage = enemyRoll - playerRoll;
-    //   playerHealth = playerHealth - damage;
-    //   $(".combat-text").html("The " + data.enemy[combatCounter] + " did " + damage + " damage. Your health is now: " + playerHealth);
-    // } else {
-    //   $(".combat-text").html("You both missed!");
-    // }
-    if ($(this).attr('id') == 'heavy') {
-      console.log("You clicked Heavy");
-      debugger;
-    } else if ($(this).attr('id') === 'light') {
-      console.log("You clicked Heavy");
+    var playerRoll = Math.floor(Math.random() * 6);
+    var enemyRoll = Math.floor(Math.random() * 6);
+    if (playerRoll > enemyRoll) {
+      var damage = playerRoll - enemyRoll;
+      enemyHealth = enemyHealth - damage;
+      $(".combat-text").html("You did " + damage + " damage. The " + data.enemy[combatCounter] + "'s health is now: " + enemyHealth);
+    } else if (enemyRoll > playerRoll) {
+      var damage = enemyRoll - playerRoll;
+      playerHealth = playerHealth - damage;
+      $(".combat-text").html("The " + data.enemy[combatCounter] + " did " + damage + " damage. Your health is now: " + playerHealth);
+    } else {
+      $(".combat-text").html("You both missed!");
     }
 
     // check to see if player or enemy has died

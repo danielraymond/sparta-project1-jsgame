@@ -72,10 +72,10 @@ nav {
 
 .combat-roll-button {
   display: inline-block;
-  /*width: 10%;*/
+  width: 20%;
   height: 10%;
   float: none;
-  margin-left: 15%;
+  margin-left: 40%;
   /*margin-right: ;*/
   background-color: red;
   color: black;
