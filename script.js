@@ -30,7 +30,7 @@ $(function(){
 
     "Text if no item1",
 
-    "Text if yes item1",
+    "As you slip the wristband over your hand you feel it tighten and you feel a flash of intense pain in your wrist. The pain subsides but you feel weaker. The wristband loosens and you pull it off.",
 
     "You are in a room with nothing in it ...(1 option)",
 
@@ -72,7 +72,7 @@ $(function(){
 
     "enemy":["Goblin", "Boss", "Giant Spider", "enemy4", "enemy5", "enemy6"],
 
-    "enemyHealth":["0", "0", "0", "0", "0", "0"]
+    "enemyHealth":["1", "0", "0", "0", "0", "0"]
   }
 
   // global variables
@@ -162,7 +162,7 @@ $(function(){
     $('.col-md-10').append('<button class="decision-button-2" id="eventOne2"></button>');
     $('#eventOne1').html("Touch the orb.");
     $('#eventOne2').html("Ignore the orb and exit through the passageway.");
-    $('#eventOne1').click(yesToEvent1);
+    $('#eventOne1').click(joinedItemRoomTeleport);
     $('#eventOne2').click(leftCombatEventRoom);
   }
 
@@ -172,7 +172,7 @@ $(function(){
     $('.col-md-10').append('<button class="decision-button-2" id="itemOne1"></button>');
     $('.col-md-10').append('<button class="decision-button-2" id="itemOne2"></button>');
     $('#itemOne1').html("Take the wristband and slip it over your wrist for safekeeping");
-    $('#itemOne2').html("Ignore the item");
+    $('#itemOne2').html("Leave the wristband and move on down the passage.");
     $('#itemOne1').click(yesToItem1);
     $('#itemOne2').click(leftCombatEventRoom);
   }
@@ -232,6 +232,16 @@ $(function(){
   function yesToItem1() {
     removeDecisionButtons();
     $('#decision-text').html(data.text[14]);
+    console.log(playerHealth);
+    playerHealth = playerHealth - 2;
+    if (playerHealth <= 0) {
+      gameLost();
+    } else {
+      $(".col-md-10").append('<button class="decision-button-1" id="wristBandDone"></button>');
+      $('#wristBandDone').html("Continue along the passage");
+      $('#wristBandDone').click(leftCombatEventRoom);
+      console.log(playerHealth);
+    }
   }
 
   function yesToEvent1() {
@@ -266,6 +276,17 @@ $(function(){
     $(".col-md-10").append('<button class="decision-button-1" id="enterCombatItemAfterEvent"></button>');
     $('#enterCombatItemAfterEvent').html("Leave the room");
     $('#enterCombatItemAfterEvent').click(leftCombatItemRoom);
+  }
+
+  function joinedItemRoomTeleport() {
+    removeDecisionButtons();
+    $('#decision-text').html(data.text[20]);
+    $(".col-md-10").append('<button class="decision-button-2" id="joinedItemSayYes"></button>');
+    $(".col-md-10").append('<button class="decision-button-2" id="joinedItemSayNo"></button>');
+    $('#joinedItemSayYes').html("Take the item");
+    $('#joinedItemSayNo').html("Ignore the item");
+    $('#joinedItemSayYes').click(joinedItemYes);
+    $('#joinedItemSayNo').click(leftCombatItemRoom);
   }
 
   function joinedItemRoom() {
@@ -483,6 +504,7 @@ $(function(){
     startGame();
   }
 
+  // function to check if you have an item
   function checkForItems(itemCheck) {
     for (i = 0; i < playerItems.length ; i++) {
       if (playerItems[i] === itemCheck) {
