@@ -14,25 +14,39 @@
         <div id="navbar-column" class="col-md-12">
           <nav class="navbar navbar-default navbar-fixed-top">
             <ul class="nav nav-pills">
-              <li class="navbar-list" role="presentation"><a  href="#">Top</a></li>
-              <li class="navbar-list" role="presentation"><a href="#bottom">Game</a></li>
-              <li class="navbar-list" role="presentation"><a href="#bottom">Contact</a></li>
+              <li class="navbar-list" role="presentation"><a href="#bottom">Play the Game</a></li>
             </ul>
           </nav>
         </div>
       </div>
       <div id="top" class="row">
-        <div class="col-md-12"></div>
+        <div class="col-md-12">
+          <h3>How to play:</h3>
+          <div class="instructions">This game involves making decisions depending on the text the game presents you with.</div>
+          <div class="instructions">First you need to set your health which you will find displayed in the top left of the screen. This is done by clicking a button when prompted.</div>
+          <div class="instructions">Next the game will present you with a block of text and you must decide what to do based on the options given.</div>
+          <div class="instructions">At some point in the game you will reach a combat scenario. To win you will need to click the button which rolls dice where the difference in values is equal to the damage either you or the enemy takes.</div>
+          <div class="instructions">There are items in the game that have various effects that may not be immediately obvious. There are also events that you must decide whether or not to do.</div>
+          <div class="instructions">You will win the game if you defeat the final enemy without your health reaching 0.</div>
+          <div class="story">
+            <h3>Game Story</h3>
+            <div class="instructions">You are a knight from a far away land seeking your fortune. You have heard tell of a castle with a room full of treasure and enemies against whom you can prove your bravery and skill.</div>
+            <div class="instructions">You rode nine days from the nearest town, over mountains, through heavy rain and harsh winds and have finally reached the front gate of the castle.</div>
+            <div class="instructions">You adjust your armour, draw your sword and prepare to enter.</div>
+          </div>
+        </div>
       </div>
       <div id="bottom" class="row">
         <div class="col-md-1"></div>
         <!-- Game content in here  -->
         <div class="col-md-10">
+          <div class="playerHealthStat"></div>
           <button id="start-button" type="button" name="button">START GAME!</button>
           <p id="decision-text"></p>
           <button id="choiceOne" class="choice-button-1" type="button" name="button"></button>
           <button id="choiceTwo" class="choice-button-2" type="button" name="button"></button>
           <p class="combat-text">You are in combat</p>
+          <div class="decision-button-container"></div>
         </div>
         <div class="col-md-1"></div>
       </div>

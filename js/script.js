@@ -2,7 +2,7 @@ $(function(){
 
   // game options
   var data =  {
-    "text":["You are at the entrance to the ... 100 metres into the corridor/tunnel you come across two doors. Do you choose the left door or the right door?",
+    "text":["You are at the entrance to the castle. You enter through the great castle gate. The gate leads directly into a tunnel. After about twenty metres you come across two doors. Do you choose the left door or the right door?",
 
     "You see a small goblin sleeping in front of you. As you try to slip past your foot knocks against a loose metal chain on the floor. The goblin wakes instantly and charges wielding a small dagger!",
 
@@ -22,13 +22,13 @@ $(function(){
 
     "The door opens easily and you enter a small room with a glowing orb on a pedestal in the center of the room. You know that there is some magic at work here but the effects are unclear. There is a passage way that bends to the left opposite you. Do you ...",
 
-    "Text if yes event1",
+    "You find yourself in a massive room with an enormous dragon. The dragon is guarding the treasure. You must defeat the dragon to get to the treasure. The ring on your finger begins to glow and feels hot to the touch. The dragon lets out a roar and flies backwards. You don't know what happened but hopefully it was good.",
 
-    "Text if no event1",
+    "You place the key in your pocket and go go to leave through the large doorway on the far side of the room ...",
 
     "You push the door but it doesn't move an inch. You push harder and it moves slowly forward. After about ten seconds of pushing the gap is large enough to slip through. You enter a passageway that bends to the right. As you are walking you notice a small alcove with a chest inside. You open the chest and inside is a thick golden wristband inscribed with room. It looks solid and probably worth a fortune. Do you ...",
 
-    "Text if no item1",
+    "You have defeated the dragon and the treasure is yours. Mountains of gold and jewels are yours. Amongst the treasure you see a small locked box. You try the key you found on the troll and find it fits the lock and inside there are countless flawless diamonds.",
 
     "As you slip the wristband over your hand you feel it tighten and you feel a flash of intense pain in your wrist. The pain subsides but you feel weaker. The wristband loosens and you pull it off.",
 
@@ -40,19 +40,19 @@ $(function(){
 
     "You eat the bread and immediately regret it. It makes you throw up and you feel much weaker.",
 
-    "Text for the event no",
+    "You have defeated the dragon and the treasure is yours. Mountains of gold and jewels are yours. Amongst the treasure you see a small box. It is locked but you discard it and begin to fill your pockets with treasure.",
 
     "You find yourself in some kind of storage room. There are hundreds of objects littering the floor. You rummage through and realise that it is all either broken or of no value. As you go to leave a shiny object on top of an old table catches your eye. It is a ring in the shape of a skull. Do you ...",
 
     "You notice no immediate effect so you decide to move on.",
 
-    "Text if no",
+    "You enter a room with an enormous door on the far side. The room is filled with countless weapons on racks. One in particular catches your eye. A two-handed longsword with a blade that looks as sharp as a razor. Do you ...",
 
     "You follow a corridor for at least a minute before you find yourself in what looks like a place of worship There are two exits on the far side of the room. There is an altar to your left handside. When you investigate you see an engraving on the altar in a language you think you can translate. ",
 
     "You read the writing and the room begins to darken. You hear a whispering in your ear and feel the presence of some evil spirit. In your haste to get out you fall and knock your head on a bench. You run towards the doors ...",
 
-    "Text if option 2",
+    "You take the sword and give it a practice swing. The blade cuts through the air with a whistle, the balance is perfect.",
 
     "You travel down a long corridor with paths forking in on either side. You follow the main path and everntually reached an enormous room which is largely empty. In the center of the room however there is a large troll. He stands up as soon as you enter and bellows in anger. He lumbers towards you ...",
 
@@ -64,17 +64,13 @@ $(function(){
 
     "The orc is dead. All that is left to do is head through the large gate.",
 
-    "You are in the far right final item room",
-
-    "You are in the final event room would you like to do the event",
-
     "As you touch the orb white light fills your vision. Your sight slowly returns to normal and you find yourself in some kind of storage room. There are hundreds of objects littering the floor. You rummage through and realise that it is all either broken or of no value. As you go to leave a shiny object on top of an old table catches your eye. It is a ring in the shape of a skull. Do you ...",
 
-    "You find yourself in a room with a huge troll. The troll is guarding the treasure. You must fight the troll to get to the treasure."],
+    "You find yourself in a massive room with an enormous dragon. The dragon is guarding the treasure. You must defeat the dragon to get to the treasure."],
 
-    "enemy":["Goblin", "Boss", "Giant Spider", "Fish Monster", "troll", "enemy6"],
+    "enemy":["Goblin", "Dragon", "Giant Spider", "Fish Monster", "Troll", "Orc", "Dragon"],
 
-    "enemyHealth":["3", "3", "3", "3", "3", "3"]
+    "enemyHealth":["3", "12", "5", "4", "5", "5", "6"]
   }
 
   // global variables
@@ -94,9 +90,11 @@ $(function(){
   function setPlayerHealth() {
     var maxPlayerHealth = 10 + Math.ceil(Math.random() * 10);
     $(this).css("display", "none");
-    $(".col-md-10").append('<button class="roll-health-button">Roll to set player health!</button>')
+    $(".decision-button-container").append('<button class="roll-health-button">Roll to set player health!</button>')
     $('.roll-health-button').click(startGame)
     playerHealth = maxPlayerHealth;
+    $("#restart").remove();
+    $(".winMessage").remove();
   }
 
   // setting listeners on game buttons and functions that it applies
@@ -115,10 +113,11 @@ $(function(){
     $(".choice-button-1").css("display", "inline-block");
     $(".choice-button-2").css("display", "inline-block");
     $(".choice-button-1").html("Go left");
-    $(".choice-button-2").html("Go Right");
+    $(".choice-button-2").html("Go right");
     $("#decision-text").html(data.text[0]);
     $(this).css("display", "none");
     locationCounter ++;
+    $(".playerHealthStat").html("Health: " + playerHealth);
   }
 
   // functions for the decision you make
@@ -126,7 +125,7 @@ $(function(){
     $(".choice-button-1").css("display", "none");
     $(".choice-button-2").css("display", "none");
     removeDecisionButtons();
-    $(".col-md-10").append('<button class="decision-button-1" id="attackGoblin"></button>');
+    $(".decision-button-container").append('<button class="decision-button-1" id="attackGoblin"></button>');
     $("#decision-text").html(data.text[1]);
     $('#attackGoblin').html("Attack the Goblin!");
     winTest = "test";
@@ -137,13 +136,13 @@ $(function(){
   // function for if you beat the goblin
   function goblinWin() {
     removeCombat();
-    $(".col-md-10").append('<button class="decision-button-3" id="goblinFightLeft"></button>')
-    $(".col-md-10").append('<button class="decision-button-3" id="goblinFightMiddle"></button>')
-    $(".col-md-10").append('<button class="decision-button-3" id="goblinFightRight"></button>')
+    $(".decision-button-container").append('<button class="decision-button-3" id="goblinFightLeft"></button>')
+    $(".decision-button-container").append('<button class="decision-button-3" id="goblinFightMiddle"></button>')
+    $(".decision-button-container").append('<button class="decision-button-3" id="goblinFightRight"></button>')
     $("#decision-text").html(data.text[4]);
-    $("#goblinFightLeft").html("go through the left door")
-    $("#goblinFightMiddle").html("go through the middle door")
-    $("#goblinFightRight").html("go through the right door")
+    $("#goblinFightLeft").html("Go through the left door")
+    $("#goblinFightMiddle").html("Go through the middle door")
+    $("#goblinFightRight").html("Go through the right door")
     $("#goblinFightLeft").click(goblinGoLeft);
     $("#goblinFightMiddle").click(goblinGoMiddle);
     $("#goblinFightRight").click(goblinGoRight);
@@ -153,8 +152,8 @@ $(function(){
   function choice2() {
     $(".choice-button-1").css("display", "none");
     $(".choice-button-2").css("display", "none");
-    $(".col-md-10").append('<button class="decision-button-2" id="drink"></button>')
-    $(".col-md-10").append('<button class="decision-button-2" id="noDrink"></button>');
+    $(".decision-button-container").append('<button class="decision-button-2" id="drink"></button>')
+    $(".decision-button-container").append('<button class="decision-button-2" id="noDrink"></button>');
     $("#decision-text").html(data.text[2]);
     $("#drink").html("Take a drink.");
     $("#noDrink").html("Ignore the basin and walk through the door.");
@@ -167,7 +166,8 @@ $(function(){
     removeDecisionButtons();
     $("#decision-text").html(data.text[3]);
     playerHealth = playerHealth + 6;
-    $(".col-md-10").append('<button class="decision-button-1" id="leave"></button>')
+    $(".playerHealthStat").html("Health: " + playerHealth);
+    $(".decision-button-container").append('<button class="decision-button-1" id="leave"></button>')
     $("#leave").html("Walk through the door");
     $("#leave").click(giantSpider);
   }
@@ -176,8 +176,8 @@ $(function(){
   function goblinGoLeft() {
     removeDecisionButtons();
     $('#decision-text').html(data.text[9]);
-    $('.col-md-10').append('<button class="decision-button-2" id="eventOne1"></button>');
-    $('.col-md-10').append('<button class="decision-button-2" id="eventOne2"></button>');
+    $('.decision-button-container').append('<button class="decision-button-2" id="eventOne1"></button>');
+    $('.decision-button-container').append('<button class="decision-button-2" id="eventOne2"></button>');
     $('#eventOne1').html("Touch the orb.");
     $('#eventOne2').html("Ignore the orb and exit through the passageway.");
     $('#eventOne1').click(joinedItemRoomTeleport);
@@ -188,8 +188,8 @@ $(function(){
   function goblinGoMiddle() {
     removeDecisionButtons();
     $('#decision-text').html(data.text[12]);
-    $('.col-md-10').append('<button class="decision-button-2" id="itemOne1"></button>');
-    $('.col-md-10').append('<button class="decision-button-2" id="itemOne2"></button>');
+    $('.decision-button-container').append('<button class="decision-button-2" id="itemOne1"></button>');
+    $('.decision-button-container').append('<button class="decision-button-2" id="itemOne2"></button>');
     $('#itemOne1').html("Take the wristband and slip it over your wrist for safekeeping");
     $('#itemOne2').html("Leave the wristband and move on down the passage.");
     $('#itemOne1').click(takeWristband);
@@ -200,7 +200,7 @@ $(function(){
   function goblinGoRight() {
     removeDecisionButtons();
     $('#decision-text').html(data.text[15]);
-    $('.col-md-10').append('<button class="decision-button-1" id="nothingRoom1"></button>');
+    $('.decision-button-container').append('<button class="decision-button-1" id="nothingRoom1"></button>');
     $('#nothingRoom1').html("Leave the room through the far door.");
     $('#nothingRoom1').click(joinedItemRoom);
   }
@@ -208,7 +208,7 @@ $(function(){
   // function for giant spider fight
   function giantSpider() {
     removeDecisionButtons();
-    $(".col-md-10").append('<button class="decision-button-1" id="attackSpider"></button>');
+    $(".decision-button-container").append('<button class="decision-button-1" id="attackSpider"></button>');
     $("#decision-text").html(data.text[5]);
     $('#attackSpider').html("Attack the Giant Spider!");
     winTest = "giantSpider";
@@ -219,8 +219,8 @@ $(function(){
   // function if the spider was beaten
   function spiderWin() {
     removeCombat();
-    $(".col-md-10").append('<button class="decision-button-2" id="spiderWinItem"></button>');
-    $(".col-md-10").append('<button class="decision-button-2" id="spiderWinNoItem"></button>');
+    $(".decision-button-container").append('<button class="decision-button-2" id="spiderWinItem"></button>');
+    $(".decision-button-container").append('<button class="decision-button-2" id="spiderWinNoItem"></button>');
     $('#decision-text').html(data.text[6]);
     $('#spiderWinItem').html("Take the helmet");
     $('#spiderWinNoItem').html("Ignore the helmet and leave.");
@@ -233,8 +233,8 @@ $(function(){
     removeDecisionButtons();
     $('#decision-text').html(data.text[7]);
     playerHasHelmet = true;
-    $(".col-md-10").append('<button class="decision-button-2" id="spiderWinGoLeft"></button>');
-    $(".col-md-10").append('<button class="decision-button-2" id="spiderWinGoRight"></button>');
+    $(".decision-button-container").append('<button class="decision-button-2" id="spiderWinGoLeft"></button>');
+    $(".decision-button-container").append('<button class="decision-button-2" id="spiderWinGoRight"></button>');
     $('#spiderWinGoLeft').html("Go left.");
     $('#spiderWinGoRight').html("Go right.");
     $('#spiderWinGoLeft').click(joinedItemRoom);
@@ -245,8 +245,8 @@ $(function(){
   function ignoreTheHelmet() {
     removeDecisionButtons();
     $('#decision-text').html(data.text[8]);
-    $(".col-md-10").append('<button class="decision-button-2" id="spiderWinGoLeft"></button>');
-    $(".col-md-10").append('<button class="decision-button-2" id="spiderWinGoRight"></button>');
+    $(".decision-button-container").append('<button class="decision-button-2" id="spiderWinGoLeft"></button>');
+    $(".decision-button-container").append('<button class="decision-button-2" id="spiderWinGoRight"></button>');
     $('#spiderWinGoLeft').html("Go left.");
     $('#spiderWinGoRight').html("Go right.");
     $('#spiderWinGoLeft').click(joinedItemRoom);
@@ -261,7 +261,8 @@ $(function(){
     if (playerHealth <= 0) {
       gameLost();
     } else {
-      $(".col-md-10").append('<button class="decision-button-1" id="wristBandDone"></button>');
+      $(".playerHealthStat").html("Health: " + playerHealth);
+      $(".decision-button-container").append('<button class="decision-button-1" id="wristBandDone"></button>');
       $('#wristBandDone').html("Continue along the passage");
       $('#wristBandDone').click(leftCombatEventRoom);
     }
@@ -271,8 +272,8 @@ $(function(){
   function leftCombatEventRoom() {
     removeDecisionButtons();
     $('#decision-text').html(data.text[16]);
-    $(".col-md-10").append('<button class="decision-button-1" id="attackEnemy4"></button>');
-    winTest = "enemy4";
+    $(".decision-button-container").append('<button class="decision-button-1" id="attackEnemy4"></button>');
+    winTest = "fishMonster";
     combatCounter = 3;
     $('#attackEnemy4').html("Attack the fish monster!");
     $('#attackEnemy4').click(combatReady);
@@ -282,8 +283,8 @@ $(function(){
   function fishMonsterWon() {
     removeCombat();
     $('#decision-text').html(data.text[17]);
-    $(".col-md-10").append('<button class="decision-button-2" id="enemy4WinEventYes"></button>');
-    $(".col-md-10").append('<button class="decision-button-2" id="enemy4WinEventNo"></button>');
+    $(".decision-button-container").append('<button class="decision-button-2" id="enemy4WinEventYes"></button>');
+    $(".decision-button-container").append('<button class="decision-button-2" id="enemy4WinEventNo"></button>');
     $('#enemy4WinEventYes').html("Eat the bread");
     $('#enemy4WinEventNo').html("Leave it and move on");
     $('#enemy4WinEventYes').click(combatEventYes);
@@ -298,7 +299,8 @@ $(function(){
     if (playerHealth <= 0) {
       gameLost();
     } else {
-      $(".col-md-10").append('<button class="decision-button-1" id="enterCombatItemAfterEvent"></button>');
+      $(".playerHealthStat").html("Health: " + playerHealth);
+      $(".decision-button-container").append('<button class="decision-button-1" id="enterCombatItemAfterEvent"></button>');
       $('#enterCombatItemAfterEvent').html("Leave the room");
       $('#enterCombatItemAfterEvent').click(leftCombatItemRoom);
     }
@@ -307,9 +309,9 @@ $(function(){
   // function for when the player teleports in joinedItemRoom
   function joinedItemRoomTeleport() {
     removeDecisionButtons();
-    $('#decision-text').html(data.text[33]);
-    $(".col-md-10").append('<button class="decision-button-2" id="joinedItemSayYes"></button>');
-    $(".col-md-10").append('<button class="decision-button-2" id="joinedItemSayNo"></button>');
+    $('#decision-text').html(data.text[31]);
+    $(".decision-button-container").append('<button class="decision-button-2" id="joinedItemSayYes"></button>');
+    $(".decision-button-container").append('<button class="decision-button-2" id="joinedItemSayNo"></button>');
     $('#joinedItemSayYes').html("Place the ring on your finger.");
     $('#joinedItemSayNo').html("Move on.");
     $('#joinedItemSayYes').click(takeRing);
@@ -320,8 +322,8 @@ $(function(){
   function joinedItemRoom() {
     removeDecisionButtons();
     $('#decision-text').html(data.text[20]);
-    $(".col-md-10").append('<button class="decision-button-2" id="joinedItemSayYes"></button>');
-    $(".col-md-10").append('<button class="decision-button-2" id="joinedItemSayNo"></button>');
+    $(".decision-button-container").append('<button class="decision-button-2" id="joinedItemSayYes"></button>');
+    $(".decision-button-container").append('<button class="decision-button-2" id="joinedItemSayNo"></button>');
     $('#joinedItemSayYes').html("Place the ring on your finger.");
     $('#joinedItemSayNo').html("Move on.");
     $('#joinedItemSayYes').click(takeRing);
@@ -331,8 +333,9 @@ $(function(){
   // function if player says yes to item option
   function takeRing() {
     removeDecisionButtons();
+    playerHasRing = true;
     $('#decision-text').html(data.text[21]);
-    $(".col-md-10").append('<button class="decision-button-1" id="joinedItemYes"></button>');
+    $(".decision-button-container").append('<button class="decision-button-1" id="joinedItemYes"></button>');
     $('#joinedItemYes').html("Move on");
     $('#joinedItemYes').click(leftCombatItemRoom);
   }
@@ -341,9 +344,9 @@ $(function(){
   function eventRoomFarRight() {
     removeDecisionButtons();
     $('#decision-text').html(data.text[23]);
-    $(".col-md-10").append('<button class="decision-button-3" id="rightEventSayYes"></button>');
-    $(".col-md-10").append('<button class="decision-button-3" id="rightEventSayNoLeft"></button>');
-    $(".col-md-10").append('<button class="decision-button-3" id="rightEventSayNoRight"></button>');
+    $(".decision-button-container").append('<button class="decision-button-3" id="rightEventSayYes"></button>');
+    $(".decision-button-container").append('<button class="decision-button-3" id="rightEventSayNoLeft"></button>');
+    $(".decision-button-container").append('<button class="decision-button-3" id="rightEventSayNoRight"></button>');
     $('#rightEventSayYes').html("Translate and read the passage out loud.");
     $('#rightEventSayNoLeft').html("Leave through the left door.");
     $('#rightEventSayNoRight').html("Leave through the right door.");
@@ -360,8 +363,9 @@ $(function(){
     if (playerHealth <= 0) {
       gameLost();
     } else {
-      $(".col-md-10").append('<button class="decision-button-2" id="rightEventLeft"></button>');
-      $(".col-md-10").append('<button class="decision-button-2" id="rightEventRight"></button>');
+      $(".playerHealthStat").html("Health: " + playerHealth);
+      $(".decision-button-container").append('<button class="decision-button-2" id="rightEventLeft"></button>');
+      $(".decision-button-container").append('<button class="decision-button-2" id="rightEventRight"></button>');
       $('#rightEventLeft').html('Escape through the left door.');
       $('#rightEventRight').html('Escape through the right door.');
       $('#rightEventLeft').click(rightEventLeftExit);
@@ -373,7 +377,7 @@ $(function(){
   function rightEventLeftExit() {
     removeDecisionButtons();
     $('#decision-text').html(data.text[29]);
-    $(".col-md-10").append('<button class="decision-button-1" id="attackEnemy6"></button>');
+    $(".decision-button-container").append('<button class="decision-button-1" id="attackEnemy6"></button>');
     winTest = "orc";
     combatCounter = 5;
     $("#attackEnemy6").html("Attack the Orc");
@@ -383,25 +387,28 @@ $(function(){
   // function if the player goes right after previous room
   function rightEventRightExit() {
     removeDecisionButtons();
-    $('#decision-text').html(data.text[31]);
-    $(".col-md-10").append('<button class="decision-button-2" id="lastItemSayYes"></button>');
-    $(".col-md-10").append('<button class="decision-button-2" id="lastItemSayNo"></button>');
-    $('#lastItemSayYes').html("Take the item");
-    $('#lastItemSayNo').html("Ignore the item");
-    $('#lastItemYes').click(lastItemYes);
+    $('#decision-text').html(data.text[22]);
+    $(".decision-button-container").append('<button class="decision-button-2" id="lastItemSayYes"></button>');
+    $(".decision-button-container").append('<button class="decision-button-2" id="lastItemSayNo"></button>');
+    $('#lastItemSayYes').html("Take the sword");
+    $('#lastItemSayNo').html("Ignore the sword and leave through the large door.");
+    $('#lastItemSayYes').click(lastItemTakeSword);
     $('#lastItemSayNo').click(boss);
   }
 
-  function lastItemYes() {
+  function lastItemTakeSword() {
     removeDecisionButtons();
     playerHasSword = true;
-
+    $('#decision-text').html(data.text[25]);
+    $(".decision-button-container").append('<button class="decision-button-1" id="takeSword"></button>');
+    $('#takeSword').html("Leave though the large door.")
+    $('#takeSword').click(boss);
   }
 
   function orcWon() {
     removeCombat();
     $('#decision-text').html(data.text[30]);
-    $(".col-md-10").append('<button class="decision-button-1" id="Enemy6WinLeave"></button>');
+    $(".decision-button-container").append('<button class="decision-button-1" id="Enemy6WinLeave"></button>');
     $('#Enemy6WinLeave').html("Leave through the door");
     $('#Enemy6WinLeave').click(boss);
   }
@@ -409,7 +416,7 @@ $(function(){
   function joinedItemYes() {
     removeDecisionButtons();
     $('#decision-text').html(data.text[20]);
-    $(".col-md-10").append('<button class="decision-button-1" id="joinedItemYesDone"></button>');
+    $(".decision-button-container").append('<button class="decision-button-1" id="joinedItemYesDone"></button>');
     $('joinedItemYesDone').html("Leave the room");
     $('joinedItemYesDone').click(leftCombatItemRoom);
   }
@@ -417,7 +424,7 @@ $(function(){
   function leftCombatItemRoom() {
     removeDecisionButtons();
     $('#decision-text').html(data.text[26]);
-    $(".col-md-10").append('<button class="decision-button-1" id="attacktroll"></button>');
+    $(".decision-button-container").append('<button class="decision-button-1" id="attacktroll"></button>');
     winTest = "troll";
     combatCounter = "4";
     $("#attacktroll").html("Attack the troll!");
@@ -427,29 +434,66 @@ $(function(){
   function trollWon() {
     removeCombat();
     $('#decision-text').html(data.text[27]);
-    $(".col-md-10").append('<button class="decision-button-2" id="combatItemRoomYes"></button>');
-    $(".col-md-10").append('<button class="decision-button-2" id="combatItemRoomNo"></button>');
+    $(".decision-button-container").append('<button class="decision-button-2" id="combatItemRoomYes"></button>');
+    $(".decision-button-container").append('<button class="decision-button-2" id="combatItemRoomNo"></button>');
     $('#combatItemRoomYes').html("Take the key");
-    $('#combatItemRoomNo').html("Ignore the key");
+    $('#combatItemRoomNo').html("Ignore the key and enter the next room.");
     $('#combatItemRoomYes').click(combatItemRoomTakeItem);
     $('#combatItemRoomNo').click(boss);
   }
 
   function combatItemRoomTakeItem() {
     removeDecisionButtons();
+    playerHasKey = true;
+    $('#decision-text').html(data.text[11]);
+    $(".decision-button-container").append('<button class="decision-button-1" id="combatItemRoomKey"></button>');
+    $('#combatItemRoomKey').html("Go through the door.");
+    $('#combatItemRoomKey').click(boss);
   }
 
   function boss(){
-    removeDecisionButtons();
-    combatCounter = 1;
-    winTest = "boss";
+    if (playerHasRing === true) {
+      specialBoss();
+    } else {
+      removeDecisionButtons();
+      $('#decision-text').html(data.text[32]);
+      combatCounter = 1;
+      winTest = "boss";
+      $(".decision-button-container").append('<button class="decision-button-1" id="bossFight"></button>');
+      $('#bossFight').html("Attack the dragon!");
+      $('#bossFight').click(combatReady);
+    }
+  }
 
+  function specialBoss() {
+    removeDecisionButtons();
+    $('#decision-text').html(data.text[10]);
+    combatCounter = 6;
+    winTest = "specialBoss";
+    $(".decision-button-container").append('<button class="decision-button-1" id="bossFight"></button>');
+    $('#bossFight').html("Attack the dragon!");
+    $('#bossFight').click(combatReady);
+  }
+  function bossWon(){
+    if (playerHasKey === true) {
+      removeCombat();
+      $('#decision-text').html(data.text[13]);
+      $(".decision-button-container").append('<button class="decision-button-1" id="secretWin"></button>')
+      $("#secretWin").html("Well done!");
+      $("#secretWin").click(gameWon);
+    } else {
+      removeCombat();
+      $('#decision-text').html(data.text[19]);
+      $(".decision-button-container").append('<button class="decision-button-1" id="win"></button>')
+      $("#win").html("Well done!");
+      $("#win").click(gameWon);
+    }
   }
 
   // function to prepare screen for combat
   function combatReady() {
     removeDecisionButtons();
-    $(".col-md-10").append('<button class="combat-roll-button"></button>');
+    $(".decision-button-container").append('<button class="combat-roll-button"></button>');
     $(".combat-text").css("display", "inline-block");
     $("#decision-text").css("display", "none");
     $('.combat-roll-button').html("Attack the " + data.enemy[combatCounter]);
@@ -463,16 +507,18 @@ $(function(){
     var enemyRoll = Math.floor(Math.random() * 6);
     if (playerRoll > enemyRoll) {
       var damage = playerRoll - enemyRoll;
+      if (playerHasSword === true) {
+        damage = damage + 1;
+      }
       enemyHealth = enemyHealth - damage;
       $(".combat-text").html("You did " + damage + " damage. The " + data.enemy[combatCounter] + "'s health is now: " + enemyHealth);
     } else if (enemyRoll > playerRoll) {
       var damage = enemyRoll - playerRoll;
-      console.log("damage before check " + damage);
       if (playerHasHelmet === true) {
         damage = damage - 1;
       }
-      console.log("damage after check " + damage);
       playerHealth = playerHealth - damage;
+      $(".playerHealthStat").html("Health: " + playerHealth);
       $(".combat-text").html("The " + data.enemy[combatCounter] + " did " + damage + " damage. Your health is now: " + playerHealth);
     } else {
       $(".combat-text").html("You both missed!");
@@ -510,42 +556,52 @@ $(function(){
     } else if (winTest === "giantSpider") {
       spiderWin();
     } else if (winTest === "boss") {
-      gameWon();
+      bossWon();
     } else if (winTest === "fishMonster") {
       fishMonsterWon();
     } else if (winTest === "troll") {
       trollWon();
     } else if (winTest === "orc") {
       orcWon();
+    } else if (winTest === "specialBoss") {
+      bossWon();
     }
   }
 
   // restart screen if player won
   function gameWon() {
     removeCombat();
+    removeDecisionButtons()
+    $(".playerHealthStat").css("display", "none");
     $('#decision-text').css("display", "none");
-    $(".col-md-10").append('<h1 class="winMessage">YOU HAVE WON!</h1>');
-    $(".col-md-10").append('<button class="decision-button-1" id="restart">Restart</button>');
+    $(".decision-button-container").append('<h1 class="winMessage">YOU HAVE WON!</h1>');
+    $(".decision-button-container").append('<button class="decision-button-1" id="restart">Restart</button>');
     $("#restart").click(restart);
   }
 
   // restart screen if player lost
   function gameLost() {
     removeCombat();
+    removeDecisionButtons();
+    $(".playerHealthStat").css("display", "none");
     $('#decision-text').css("display", "none");
-    $(".col-md-10").append('<h1 class="winMessage">YOU ARE DEAD!</h1>');
-    $(".col-md-10").append('<button class="decision-button-1" id="restart">Restart</button>');
+    $(".decision-button-container").append('<h1 class="winMessage">YOU ARE DEAD!</h1>');
+    $(".decision-button-container").append('<button class="decision-button-1" id="restart">Restart</button>');
     $("#restart").click(restart);
   }
 
   // function to restart game when button clicked
   function restart() {
+    $(".playerHealthStat").css("display", "inline-block");
     playerHealth = 12;
     winTest = null;
     locationCounter = 0;
     combatCounter = 0;
-    playerItems = [""];
-    startGame();
+    playerHasKey = false;
+    playerHasSword = false;
+    playerHasHelmet = false;
+    playerHasRing = false;
+    setPlayerHealth();
   }
 
   setGameListeners();
