@@ -70,7 +70,7 @@ $(function(){
 
     "enemy":["Goblin", "Dragon", "Giant Spider", "Fish Monster", "Troll", "Orc", "Dragon"],
 
-    "enemyHealth":["3", "12", "5", "4", "5", "5", "6"]
+    "enemyHealth":["4", "12", "6", "6", "7", "6", "6"]
   }
 
   // global variables
@@ -396,6 +396,7 @@ $(function(){
     $('#lastItemSayNo').click(boss);
   }
 
+  // function for if the player takes the sword
   function lastItemTakeSword() {
     removeDecisionButtons();
     playerHasSword = true;
@@ -405,6 +406,7 @@ $(function(){
     $('#takeSword').click(boss);
   }
 
+  // function for if the orc battle is won
   function orcWon() {
     removeCombat();
     $('#decision-text').html(data.text[30]);
@@ -413,6 +415,7 @@ $(function(){
     $('#Enemy6WinLeave').click(boss);
   }
 
+  // function if the player takes the item in the joineditemroom
   function joinedItemYes() {
     removeDecisionButtons();
     $('#decision-text').html(data.text[20]);
@@ -421,6 +424,7 @@ $(function(){
     $('joinedItemYesDone').click(leftCombatItemRoom);
   }
 
+  // function for the final combat room before the boss
   function leftCombatItemRoom() {
     removeDecisionButtons();
     $('#decision-text').html(data.text[26]);
@@ -431,6 +435,7 @@ $(function(){
     $("#attacktroll").click(combatReady);
   }
 
+  // function if the player defeats the troll
   function trollWon() {
     removeCombat();
     $('#decision-text').html(data.text[27]);
@@ -442,6 +447,7 @@ $(function(){
     $('#combatItemRoomNo').click(boss);
   }
 
+  // function if the player takes the item after defeating the troll
   function combatItemRoomTakeItem() {
     removeDecisionButtons();
     playerHasKey = true;
@@ -451,6 +457,7 @@ $(function(){
     $('#combatItemRoomKey').click(boss);
   }
 
+  // function to set-up the final boss fight
   function boss(){
     if (playerHasRing === true) {
       specialBoss();
@@ -465,6 +472,7 @@ $(function(){
     }
   }
 
+  // function for boss if the player has the ring
   function specialBoss() {
     removeDecisionButtons();
     $('#decision-text').html(data.text[10]);
@@ -474,6 +482,8 @@ $(function(){
     $('#bossFight').html("Attack the dragon!");
     $('#bossFight').click(combatReady);
   }
+
+  // function for if you defeat the boss
   function bossWon(){
     if (playerHasKey === true) {
       removeCombat();
@@ -521,7 +531,7 @@ $(function(){
       $(".playerHealthStat").html("Health: " + playerHealth);
       $(".combat-text").html("The " + data.enemy[combatCounter] + " did " + damage + " damage. Your health is now: " + playerHealth);
     } else {
-      $(".combat-text").html("You both missed!");
+      $(".combat-text").html("You both failed to land a blow.");
     }
 
     // check to see if player or enemy has died
