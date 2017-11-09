@@ -48,9 +48,9 @@ $(function(){
 
     "Text if no",
 
-    "You are in a room with an event. (2 options)",
+    "You follow a corridor for at least a minute before you find yourself in what looks like a place of worship There are two exits on the far side of the room. There is an altar to your left handside. When you investigate you see an engraving on the altar in a language you think you can translate. ",
 
-    "Text if option 1",
+    "You read the writing and the room begins to darken. You hear a whispering in your ear and feel the presence of some evil spirit. In your haste to get out you fall and knock your head on a bench. You run towards the doors ...",
 
     "Text if option 2",
 
@@ -60,9 +60,9 @@ $(function(){
 
     "You place the key into your bag and move on.",
 
-    "You are in a room with enemy6. Do combat.",
+    "You travel down a short passage and find yourself in a room with a huge gate on the far side. Guarding the gate is a large orc. The orc takes one look at you and pulls out a huge mace. He walks forward swinging it menacingly",
 
-    "You have defeated enemy6 the exit is at the back of the room",
+    "The orc is dead. All that is left to do is head through the large gate.",
 
     "You are in the far right final item room",
 
@@ -344,34 +344,44 @@ $(function(){
     $(".col-md-10").append('<button class="decision-button-3" id="rightEventSayYes"></button>');
     $(".col-md-10").append('<button class="decision-button-3" id="rightEventSayNoLeft"></button>');
     $(".col-md-10").append('<button class="decision-button-3" id="rightEventSayNoRight"></button>');
-    $('#rightEventSayYes').html("Do the event!");
-    $('#rightEventSayNoLeft').html("Leave through the left passage.");
-    $('#rightEventSayNoRight').html("Leave through the right passage.");
+    $('#rightEventSayYes').html("Translate and read the passage out loud.");
+    $('#rightEventSayNoLeft').html("Leave through the left door.");
+    $('#rightEventSayNoRight').html("Leave through the right door.");
     $('#rightEventSayYes').click(rightEventYes);
-    $('#rightEventSayNoLeft').click(rightEventLeft);
-    $('#rightEventSayNoRight').click(rightEventRight);
+    $('#rightEventSayNoLeft').click(rightEventLeftExit);
+    $('#rightEventSayNoRight').click(rightEventRightExit);
   }
 
   // function if player says yes to event option
   function rightEventYes() {
     removeDecisionButtons();
     $('#decision-text').html(data.text[24]);
+    playerHealth = playerHealth - 3;
+    if (playerHealth <= 0) {
+      gameLost();
+    } else {
+      $(".col-md-10").append('<button class="decision-button-2" id="rightEventLeft"></button>');
+      $(".col-md-10").append('<button class="decision-button-2" id="rightEventRight"></button>');
+      $('#rightEventLeft').html('Escape through the left door.');
+      $('#rightEventRight').html('Escape through the right door.');
+      $('#rightEventLeft').click(rightEventLeftExit);
+      $('#rightEventRight').click(rightEventRightExit);
+    }
   }
 
   // function if the player goes right after previous room
-  function rightEventLeft() {
+  function rightEventLeftExit() {
     removeDecisionButtons();
     $('#decision-text').html(data.text[29]);
     $(".col-md-10").append('<button class="decision-button-1" id="attackEnemy6"></button>');
-    winTest = "troll";
-    winTest = "enemy6";
+    winTest = "orc";
     combatCounter = 5;
-    $("#attackEnemy6").html("Attack enemy6");
+    $("#attackEnemy6").html("Attack the Orc");
     $("#attackEnemy6").click(combatReady);
   }
 
   // function if the player goes right after previous room
-  function rightEventRight() {
+  function rightEventRightExit() {
     removeDecisionButtons();
     $('#decision-text').html(data.text[31]);
     $(".col-md-10").append('<button class="decision-button-2" id="lastItemSayYes"></button>');
@@ -379,19 +389,21 @@ $(function(){
     $('#lastItemSayYes').html("Take the item");
     $('#lastItemSayNo').html("Ignore the item");
     $('#lastItemYes').click(lastItemYes);
-    $('#lastItemSayNo').click(finalEventRoom);
+    $('#lastItemSayNo').click(boss);
   }
 
   function lastItemYes() {
     removeDecisionButtons();
+    playerHasSword = true;
+
   }
 
-  function enemy6Won() {
+  function orcWon() {
     removeCombat();
     $('#decision-text').html(data.text[30]);
     $(".col-md-10").append('<button class="decision-button-1" id="Enemy6WinLeave"></button>');
     $('#Enemy6WinLeave').html("Leave through the door");
-    $('#Enemy6WinLeave').click(finalEventRoom);
+    $('#Enemy6WinLeave').click(boss);
   }
 
   function joinedItemYes() {
@@ -427,26 +439,11 @@ $(function(){
     removeDecisionButtons();
   }
 
-  function finalEventRoom() {
-    removeDecisionButtons();
-    $('#decision-text').html(data.text[32]);
-    $(".col-md-10").append('<button class="decision-button-2" id="finalEventYes"></button>');
-    $(".col-md-10").append('<button class="decision-button-2" id="finalEventNo"></button>');
-    $('#finalEventYes').html("Do the final event");
-    $('#finalEventNo').html("Don't do the final event");
-    $('#finalEventYes').click(finalEventYes);
-    $('#finalEventNo').click(boss);
-  }
-
-  function finalEventYes() {
-    removeDecisionButtons();
-  }
-
   function boss(){
     removeDecisionButtons();
     combatCounter = 1;
     winTest = "boss";
-    combatReady();
+
   }
 
   // function to prepare screen for combat
@@ -514,12 +511,12 @@ $(function(){
       spiderWin();
     } else if (winTest === "boss") {
       gameWon();
-    } else if (winTest === "enemy4") {
+    } else if (winTest === "fishMonster") {
       fishMonsterWon();
     } else if (winTest === "troll") {
       trollWon();
-    } else if (winTest === "enemy6") {
-      enemy6Won();
+    } else if (winTest === "orc") {
+      orcWon();
     }
   }
 
