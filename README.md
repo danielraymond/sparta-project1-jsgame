@@ -41,3 +41,9 @@ I am pleased with the size of the game and the number of locations, events and i
 ##### What was the most challenging part:
 
 I found coming up with a good method to get between parts of the story difficult as well as putting items into the game. I also found predicting how much time things would take difficult as I had plans to improve the game that could not be completed due to a lack of time.
+
+##### Planning
+
+![Wireframe](./images/project1_wireframe.jpg)
+
+![Trello Board](./images/Screen Shot 2017-11-09 at 22.43.04.png)
