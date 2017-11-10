@@ -523,15 +523,15 @@ $(function(){
       enemyHealth = enemyHealth - damage;
       $('.combat-text').html('You did ' + damage + ' damage. The ' + data.enemy[combatCounter] + 's health is now: ' + enemyHealth);
     } else if (enemyRoll > playerRoll) {
-      var damage = enemyRoll - playerRoll;
-      if (playerHasHelmet === true) {
+        var damage = enemyRoll - playerRoll;
+        if (playerHasHelmet === true) {
         damage = damage - 1;
-      }
-      playerHealth = playerHealth - damage;
-      $('.playerHealthStat').html('Health: ' + playerHealth);
-      $('.combat-text').html('The ' + data.enemy[combatCounter] + ' did ' + damage + ' damage. Your health is now: ' + playerHealth);
+        }
+        playerHealth = playerHealth - damage;
+        $('.playerHealthStat').html('Health: ' + playerHealth);
+        $('.combat-text').html('The ' + data.enemy[combatCounter] + ' did ' + damage + ' damage. Your health is now: ' + playerHealth);
     } else {
-      $('.combat-text').html('You both failed to land a blow.');
+        $('.combat-text').html('You both failed to land a blow.');
     }
 
     // check to see if player or enemy has died
