@@ -10,7 +10,7 @@ $(function(){
 
     'You cup your hands and take a drink. You feel a rush of energy and notice no ill effects.',
 
-    'You have killed the goblin. There are three doors to choose from. There is a bright light coming from behind the left door. The middle door looks heavier and has iron studs dotted over it. The left door looks to be the most used of the three as the door knob is worn smooth with use. Do you ...',
+    'You have killed the goblin. There are three doors to choose from. There is a bright light coming from behind the left door. The middle door looks heavier and has iron studs dotted over it. The right door looks to be the most used of the three as the door knob is worn smooth with use. Do you ...',
 
     'You enter a large, dark and foul smelling room. As you take a step forwards you feel something brush against your face. It is a spiders web, but the strands are thicker than any you have ever seen. Suddenly out of the darkness a spider the size of a large dog rushes at you ...',
 
