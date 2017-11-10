@@ -46,4 +46,4 @@ I found coming up with a good method to get between parts of the story difficult
 
 ![Wireframe](./images/project1_wireframe.jpg)
 
-![Trello Board](./images/Screen Shot 2017-11-09 at 22.43.04.png)
+![Trello Board](./images/trello-board-project1.png)
