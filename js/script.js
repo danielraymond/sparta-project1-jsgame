@@ -12,7 +12,7 @@ $(function(){
 
     'You have killed the goblin. There are three doors to choose from. There is a bright light coming from behind the left door. The middle door looks heavier and has iron studs dotted over it. The left door looks to be the most used of the three as the door knob is worn smooth with use. Do you ...',
 
-    'You enter a large, dark and foul smelling room. As you take a step forwards you feel something brush against your face. It is a spider's web, but the strands are thicker than any you have ever seen. Suddenly out of the darkness a spider the size of a large dog rushes at you.',
+    'You enter a large, dark and foul smelling room. As you take a step forwards you feel something brush against your face. It is a spiders web, but the strands are thicker than any you have ever seen. Suddenly out of the darkness a spider the size of a large dog rushes at you ...',
 
     'The ruined body of the spider slumps to the side. On your way towards the far end of the room you brush against the skeleton of a man clad in full armour. Most of it looks inferior to your own however his helmet is of far better quality than anything else he was wearing. Do you ...',
 
@@ -22,11 +22,11 @@ $(function(){
 
     'The door opens easily and you enter a small room with a glowing orb on a pedestal in the center of the room. You know that there is some magic at work here but the effects are unclear. There is a passage way that bends to the left opposite you. Do you ...',
 
-    'You find yourself in a massive room with an enormous dragon. The dragon is guarding the treasure. You must defeat the dragon to get to the treasure. The ring on your finger begins to glow and feels hot to the touch. The dragon lets out a roar and flies backwards. You don't know what happened but hopefully it was good.',
+    'You find yourself in a massive room with an enormous dragon. The dragon is guarding the treasure. You must defeat the dragon to get to the treasure. The ring on your finger begins to glow and feels hot to the touch. The dragon lets out a roar and flies backwards. You dont know what happened but hopefully it was good.',
 
     'You place the key in your pocket and go go to leave through the large doorway on the far side of the room ...',
 
-    'You push the door but it doesn't move an inch. You push harder and it moves slowly forward. After about ten seconds of pushing the gap is large enough to slip through. You enter a passageway that bends to the right. As you are walking you notice a small alcove with a chest inside. You open the chest and inside is a thick golden wristband inscribed with room. It looks solid and probably worth a fortune. Do you ...',
+    'You push the door but it doesnt move an inch. You push harder and it moves slowly forward. After about ten seconds of pushing the gap is large enough to slip through. You enter a passageway that bends to the right. As you are walking you notice a small alcove with a chest inside. You open the chest and inside is a thick golden wristband inscribed with runes. It looks solid and probably worth a fortune. Do you ...',
 
     'You have defeated the dragon and the treasure is yours. Mountains of gold and jewels are yours. Amongst the treasure you see a small locked box. You try the key you found on the troll and find it fits the lock and inside there are countless flawless diamonds.',
 
@@ -36,7 +36,7 @@ $(function(){
 
     'You find some steps and follow them down into a foul smelling cellar. The walls are wet and slimy. There is a path next to a pool of green water. As you edge across the path you suddenly feel water splash over you and are face to face with what you can only describe as a fish monster holding a wicked looking trident ...',
 
-    'You disarm the fish monster and drive its spear through it's throat. You look around and for more enemies and notice what looks like an offering of some kind of some hard bread on a table further down the path. You are very hungry and it looks normal. Do you ...',
+    'You disarm the fish monster and drive its spear through its throat. You look around and for more enemies and notice what looks like an offering of some kind of some hard bread on a table further down the path. You are very hungry and it looks normal. Do you ...',
 
     'You eat the bread and immediately regret it. It makes you throw up and you feel much weaker.',
 
@@ -48,7 +48,7 @@ $(function(){
 
     'You enter a room with an enormous door on the far side. The room is filled with countless weapons on racks. One in particular catches your eye. A two-handed longsword with a blade that looks as sharp as a razor. Do you ...',
 
-    'You follow a corridor for at least a minute before you find yourself in what looks like a place of worship There are two exits on the far side of the room. There is an altar to your left handside. When you investigate you see an engraving on the altar in a language you think you can translate. ',
+    'You follow a corridor for at least a minute before you find yourself in what looks like a place of worship There are two exits on the far side of the room. There is an altar to your left hand side. When you investigate you see an engraving on the altar in a language you think you can translate. ',
 
     'You read the writing and the room begins to darken. You hear a whispering in your ear and feel the presence of some evil spirit. In your haste to get out you fall and knock your head on a bench. You run towards the doors ...',
 
@@ -56,7 +56,7 @@ $(function(){
 
     'You travel down a long corridor with paths forking in on either side. You follow the main path and everntually reached an enormous room which is largely empty. In the center of the room however there is a large troll. He stands up as soon as you enter and bellows in anger. He lumbers towards you ...',
 
-    'You have defeated troll. You search his body and find a large iron key in a pocket.',
+    'You have defeated troll. You search his body and find a large iron key in his pocket.',
 
     'You place the key into your bag and move on.',
 
@@ -70,7 +70,7 @@ $(function(){
 
     'enemy':['Goblin', 'Dragon', 'Giant Spider', 'Fish Monster', 'Troll', 'Orc', 'Dragon'],
 
-    'enemyHealth':['4', '12', '6', '6', '7', '6', '6']
+    'enemyHealth':['5', '14', '7', '7', '8', '7', '7']
   }
 
   // global variables
@@ -93,8 +93,8 @@ $(function(){
     $('.decision-button-container').append('<button class="roll-health-button">Roll to set player health!</button>')
     $('.roll-health-button').click(startGame)
     playerHealth = maxPlayerHealth;
-    $("#restart").remove();
-    $(".winMessage").remove();
+    $('#restart').remove();
+    $('.winMessage').remove();
   }
 
   // setting listeners on game buttons and functions that it applies
